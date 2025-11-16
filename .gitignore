@@ -1,0 +1,18 @@
+# Godot 4+ specific files
+.godot/
+
+# Godot 3 specific (schadet nicht, sie drin zu lassen)
+.import/
+
+# C# build files (falls du C# nutzen würdest)
+.mono/
+obj/
+bin/
+
+# Export-Dateien
+*.export/
+*.export_presets
+
+# Auto-generierte Configs
+export_presets.cfg
+override.cfg
