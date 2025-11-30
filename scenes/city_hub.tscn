@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://w5d6h6kcu8ut"]
+
+[ext_resource type="Texture2D" uid="uid://j2k12g8xsmd5" path="res://assets/sprites/bg_image.jpg" id="1_cnwv7"]
+
+[node name="CityHub" type="Node2D"]
+
+[node name="Background" type="TextureRect" parent="."]
+offset_left = -12.0
+offset_top = -11.0
+offset_right = 1012.0
+offset_bottom = 548.0
+scale = Vector2(1.1115, 1.1115)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("1_cnwv7")
+expand_mode = 5
