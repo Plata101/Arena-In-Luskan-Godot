@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://w5d6h6kcu8ut"]
+[gd_scene load_steps=3 format=3 uid="uid://w5d6h6kcu8ut"]
 
+[ext_resource type="Script" uid="uid://dn6q0qlf4qivq" path="res://scripts/CityHub.gd" id="1_6r8dd"]
 [ext_resource type="Texture2D" uid="uid://j2k12g8xsmd5" path="res://assets/sprites/bg_image.jpg" id="1_cnwv7"]
 
 [node name="CityHub" type="Node2D"]
+script = ExtResource("1_6r8dd")
 
 [node name="Background" type="TextureRect" parent="."]
 offset_left = -12.0
@@ -14,3 +16,62 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("1_cnwv7")
 expand_mode = 5
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 210.0
+offset_top = 5.0
+offset_right = -314.0
+offset_bottom = 44.0
+grow_horizontal = 2
+scale = Vector2(0.931778, 1.0797)
+theme_override_constants/separation = 50
+
+[node name="GoldLabel" type="Label" parent="UI/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.101961, 0.0313726, 0.0235294, 1)
+theme_override_font_sizes/font_size = 28
+text = "Gold: 0"
+
+[node name="DayLabel" type="Label" parent="UI/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.101961, 0.0313726, 0.0235294, 1)
+theme_override_font_sizes/font_size = 28
+text = "Day: 1"
+
+[node name="BtnArena" type="Button" parent="."]
+offset_left = 899.0
+offset_top = 209.0
+offset_right = 1011.0
+offset_bottom = 240.0
+text = "Enter Arena "
+
+[node name="BtnShop" type="Button" parent="."]
+offset_left = 66.0
+offset_top = 448.0
+offset_right = 178.0
+offset_bottom = 479.0
+text = "Enter Shop"
+
+[node name="BtnTavern" type="Button" parent="."]
+offset_left = 503.0
+offset_top = 398.0
+offset_right = 615.0
+offset_bottom = 429.0
+text = "Enter Tavern "
+
+[node name="BtnArmory" type="Button" parent="."]
+offset_left = 323.0
+offset_top = 404.0
+offset_right = 435.0
+offset_bottom = 435.0
+text = "Enter Armory"
+
+[connection signal="pressed" from="BtnArena" to="." method="_on_btn_arena_pressed"]
+[connection signal="pressed" from="BtnShop" to="." method="_on_btn_shop_pressed"]
+[connection signal="pressed" from="BtnArmory" to="." method="_on_btn_armory_pressed"]
