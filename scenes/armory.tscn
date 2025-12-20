@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://dcv8jmjsn1cwg"]
+[gd_scene load_steps=4 format=3 uid="uid://dcv8jmjsn1cwg"]
 
+[ext_resource type="Script" uid="uid://yrpvtr0tr3cw" path="res://scripts/Armory.gd" id="1_jwn4v"]
 [ext_resource type="Texture2D" uid="uid://baguk3ataj7xs" path="res://assets/sprites/armory_bg.jpg" id="1_oaria"]
+[ext_resource type="Texture2D" uid="uid://dgi5cm3rs4jqk" path="res://icon.svg" id="2_48su1"]
 
 [node name="Armory" type="Control"]
 layout_mode = 3
@@ -9,6 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_jwn4v")
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 1
@@ -20,3 +23,67 @@ grow_vertical = 2
 texture = ExtResource("1_oaria")
 expand_mode = 1
 stretch_mode = 6
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="BtnBack" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "← back to the city"
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="GoldLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Gold: 0"
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 20
+columns = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/GridContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer/GridContainer/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+texture = ExtResource("2_48su1")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/GridContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Iron sword
+(+1 Strength) 10 Gold"
+horizontal_alignment = 1
+
+[node name="BtnBuySword" type="Button" parent="MarginContainer/VBoxContainer/GridContainer/PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Kaufen"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/BtnBack" to="." method="_on_btn_back_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/GridContainer/PanelContainer/VBoxContainer/BtnBuySword" to="." method="_on_btn_buy_sword_pressed"]
