@@ -5,6 +5,7 @@ var currentGold: int = 100
 var playerHp: int = 100
 var playerMaxHp: int = 100
 var playerStrength: int = 5
+var playerArmor: int = 0
 
 # Spiel-Status
 var currentDay: int = 1
