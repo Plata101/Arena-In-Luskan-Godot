@@ -11,4 +11,6 @@ var playerArmor: int = 0
 var currentDay: int = 1
 var maxDays: int = 100
 
-# TODO: Inventar-Variablen (Tränke etc.)
+# Inventory
+
+var inventory: Array = []
