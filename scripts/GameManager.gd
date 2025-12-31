@@ -14,3 +14,5 @@ var maxDays: int = 100
 # Inventory
 
 var inventory: Array = []
+
+var currentEnemy = {} # Hier speichern wir das ausgewählte Monster vor dem Szenenwechsel
