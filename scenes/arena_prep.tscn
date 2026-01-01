@@ -1,7 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://c8sxfdj874fpq"]
+[gd_scene load_steps=4 format=3 uid="uid://c8sxfdj874fpq"]
 
 [ext_resource type="Texture2D" uid="uid://w1k5ehf858m2" path="res://assets/sprites/arenaPrep_bg.jpg" id="1_2riye"]
 [ext_resource type="Script" uid="uid://c5ccx5upd56nr" path="res://scripts/arenaPrep.gd" id="1_gk2vu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gk2vu"]
+content_margin_left = 20.0
+content_margin_top = 5.0
+content_margin_right = 20.0
+content_margin_bottom = 5.0
+bg_color = Color(0.796868, 0, 0.148739, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [node name="ArenaPrep" type="Control"]
 layout_mode = 3
@@ -60,59 +71,105 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="Control" type="Control" parent="MarginContainer/VBoxContainer/MainContent/LeftColumn"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/MainContent/LeftColumn"]
 layout_mode = 2
-text = "Wähle Deinen Gegner"
+text = "Choose your next opponent"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/MainContent/LeftColumn"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="EnemyList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainContent/LeftColumn/ScrollContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/MainContent/LeftColumn/ScrollContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 10
+
+[node name="EnemyList" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainContent/LeftColumn/ScrollContainer/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/separation = 5
 
 [node name="PreviewPanel (right)" type="Panel" parent="MarginContainer/VBoxContainer/MainContent"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 
-[node name="Preview Content" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainContent/PreviewPanel (right)"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/MainContent/PreviewPanel (right)"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
 
-[node name="EnemyNameLabel" type="Label" parent="MarginContainer/VBoxContainer/MainContent/PreviewPanel (right)/Preview Content"]
+[node name="Preview Content" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainContent/PreviewPanel (right)/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="EnemyNameLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/MainContent/PreviewPanel (right)/MarginContainer/Preview Content"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/italics_font_size = 24
+bbcode_enabled = true
+fit_content = true
 
-[node name="EnemyImage" type="TextureRect" parent="MarginContainer/VBoxContainer/MainContent/PreviewPanel (right)/Preview Content"]
+[node name="TopSection" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MainContent/PreviewPanel (right)/MarginContainer/Preview Content"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 20
+
+[node name="ImageContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainContent/PreviewPanel (right)/MarginContainer/Preview Content/TopSection"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+
+[node name="EnemyImage" type="TextureRect" parent="MarginContainer/VBoxContainer/MainContent/PreviewPanel (right)/MarginContainer/Preview Content/TopSection/ImageContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 expand_mode = 4
 stretch_mode = 5
 
-[node name="EnemyStatsLabel" type="Label" parent="MarginContainer/VBoxContainer/MainContent/PreviewPanel (right)/Preview Content"]
+[node name="StatsContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainContent/PreviewPanel (right)/MarginContainer/Preview Content/TopSection"]
+layout_mode = 2
+
+[node name="EnemyStatsLabel" type="Label" parent="MarginContainer/VBoxContainer/MainContent/PreviewPanel (right)/MarginContainer/Preview Content/TopSection/StatsContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "HP: ?? | ATK: ??"
 
-[node name="DangerLabel" type="Label" parent="MarginContainer/VBoxContainer/MainContent/PreviewPanel (right)/Preview Content"]
+[node name="DangerLabel" type="Label" parent="MarginContainer/VBoxContainer/MainContent/PreviewPanel (right)/MarginContainer/Preview Content/TopSection/StatsContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Gefahr: Hoch"
 
-[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/MainContent/PreviewPanel (right)/Preview Content"]
+[node name="DescriptionLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/MainContent/PreviewPanel (right)/MarginContainer/Preview Content"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(600, 160)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/italics_font_size = 20
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/MainContent/PreviewPanel (right)/MarginContainer/Preview Content"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="BtnFight" type="Button" parent="MarginContainer/VBoxContainer/MainContent/PreviewPanel (right)/Preview Content"]
+[node name="ButtonContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MainContent/PreviewPanel (right)/MarginContainer/Preview Content"]
+layout_mode = 2
+alignment = 2
+
+[node name="BtnFight" type="Button" parent="MarginContainer/VBoxContainer/MainContent/PreviewPanel (right)/MarginContainer/Preview Content/ButtonContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "FIGHT"
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_gk2vu")
+text = "FIGHT 🗡️"

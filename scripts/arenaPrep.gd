@@ -8,8 +8,9 @@ extends Control
 @onready var dangerLabel = %DangerLabel
 @onready var fightButton = %BtnFight
 
-@onready var goldLabel = %GoldLabel 
-@onready var btnBack = %BtnBack # Falls du dem Button im Header diesen Unique Name gegeben hast
+@onready var goldLabel = %GoldLabel
+@onready var descriptionLabel = %DescriptionLabel 
+@onready var btnBack = %BtnBack 
 
 # Der aktuell gewählte Gegner
 var selectedEnemyData = {}
@@ -18,30 +19,33 @@ var selectedEnemyData = {}
 var enemies = [
 	{
 		"id": "goblin",
-		"name": "Goblin Späher",
+		"name": "Goblin Scout",
 		"hp": 20,
 		"damage": 3,
 		"reward_gold": 10,
 		"icon": "res://assets/sprites/goblin.png", # Pfad anpassen!
-		"min_level": 1 # Optional: Erst ab Level X sichtbar
+		"min_level": 1, # Optional: Erst ab Level X sichtbar
+		"description": "A small but sneaky thief lurking in the shadows. He would rather steal than fight."
 	},
 	{
 		"id": "orc_grunt",
-		"name": "Ork Krieger",
+		"name": "Ork Warrior",
 		"hp": 45,
 		"damage": 6,
 		"reward_gold": 25,
 		"icon": "res://assets/sprites/orc.png",
-		"min_level": 1
+		"min_level": 1,
+		"description": "A brutal soldier of the Horde. His axe is rusty, but deadly. He smells like old cheese and violence."
 	},
 	{
 		"id": "troll",
-		"name": "Höhlentroll",
+		"name": "Cave Troll",
 		"hp": 100,
 		"damage": 12,
 		"reward_gold": 100,
 		"icon": "res://assets/sprites/troll.png",
-		"min_level": 1
+		"min_level": 1,
+		"description": "A massive monster from the depths. His skin is as hard as stone. Only the bravest dare approach him."
 	}
 ]
 
@@ -68,22 +72,31 @@ func generate_enemy_buttons():
 	for child in enemyListContainer.get_children():
 		child.queue_free()
 	for enemy in enemies:
-		var btn = Button.new()
-		btn.text = enemy["name"] 
-		btn.alignment = HORIZONTAL_ALIGNMENT_LEFT # Sieht hübscher aus
-		
-		# WICHTIG: Verbinden und Daten mitgeben (.bind)
-		btn.pressed.connect(select_enemy.bind(enemy))
-		
-		enemyListContainer.add_child(btn)
+			var btn = Button.new()
+			btn.text = " " + enemy["name"]
+			btn.alignment = HORIZONTAL_ALIGNMENT_LEFT # Text links im Button
+			
+			# --- HIER IST DIE ÄNDERUNG ---
+			# 1. Wir geben dem Button eine feste Mindestgröße (Breite x Höhe)
+			# 250 Pixel breit, 40 Pixel hoch (pass den Wert an, wie du magst)
+			btn.custom_minimum_size = Vector2(250, 40)
+			
+			# 2. Damit er nicht breiter wird als 250px (falls der Container riesig ist),
+			# sagen wir ihm: "Bleib links und nimm nicht mehr Platz als nötig"
+			btn.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN 
+			
+			btn.pressed.connect(select_enemy.bind(enemy))
+			enemyListContainer.add_child(btn)
 		
 		
 func select_enemy(data):
 	selectedEnemyData = data
 	
 	# UI Update
-	enemyNameLabel.text = data["name"]
-	enemyStatsLabel.text = "HP: " + str(data["hp"]) + " | Schaden: " + str(data["damage"]) + "\nBelohnung: " + str(data["reward_gold"]) + " Gold"
+	enemyNameLabel.text = "[i]" + data["name"] + "[/i]"
+	enemyStatsLabel.text = "HP: " + str(data["hp"]) + " | Damage: " + str(data["damage"]) + "\nReward: " + str(data["reward_gold"]) + " Gold"
+	
+	descriptionLabel.text = "[i]" + data["description"] + "[/i]"
 	
 	# Bild laden (Safety Check)
 	if ResourceLoader.exists(data["icon"]):
@@ -110,13 +123,13 @@ func calculate_danger_level(data):
 	
 	# Wenn wir mehr Schaden fressen als wir Leben haben -> Tödlich
 	if damageTaken >= playerSurvivability:
-		dangerLabel.text = "Gefahr: TÖDLICH 💀"
+		dangerLabel.text = "Danger: DEADLY 💀"
 		dangerLabel.modulate = Color(1, 0, 0) # Rot
 	elif damageTaken >= playerSurvivability * 0.7:
-		dangerLabel.text = "Gefahr: Hoch ⚠️"
+		dangerLabel.text = "Danger: HIGH ⚠️"
 		dangerLabel.modulate = Color(1, 0.5, 0) # Orange
 	else:
-		dangerLabel.text = "Gefahr: Einfach ✅"
+		dangerLabel.text = "Danger: Low ✅"
 		dangerLabel.modulate = Color(0, 1, 0) # Grün
 
 func _on_btn_fight_pressed():
