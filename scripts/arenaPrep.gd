@@ -138,8 +138,7 @@ func _on_btn_fight_pressed():
 	GameManager.currentEnemy = selectedEnemyData
 	
 	# Szenenwechsel
-	# get_tree().change_scene_to_file("res://scenes/Battle.tscn")
-	print("Kampf startet gegen: " + selectedEnemyData["name"])
+	get_tree().change_scene_to_file("res://scenes/battle.tscn")
 
 func _on_btn_back_pressed():
 	get_tree().change_scene_to_file("res://scenes/city_hub.tscn")

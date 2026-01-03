@@ -173,3 +173,5 @@ size_flags_horizontal = 8
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_gk2vu")
 text = "FIGHT 🗡️"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/MainContent/PreviewPanel (right)/MarginContainer/Preview Content/ButtonContainer/BtnFight" to="." method="_on_btn_fight_pressed"]
