@@ -1,7 +1,49 @@
-[gd_scene load_steps=3 format=3 uid="uid://bib0uw033c255"]
+[gd_scene load_steps=10 format=3 uid="uid://bib0uw033c255"]
 
 [ext_resource type="Texture2D" uid="uid://0p6iudqoif6n" path="res://assets/sprites/arena-bg.jpg" id="1_dn72j"]
 [ext_resource type="Script" uid="uid://funfqv4qk4gl" path="res://scripts/battle.gd" id="1_th188"]
+[ext_resource type="Texture2D" uid="uid://dqldtypgjtpp" path="res://assets/sprites/hero.png" id="3_p1qf1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_th188"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0, 0, 0, 0.588235)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_p1qf1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lpir7"]
+bg_color = Color(0.961518, 4.45209e-06, 9.62615e-07, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a12nh"]
+bg_color = Color(0.843137, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6vh42"]
+bg_color = Color(0.819608, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p1qf1"]
+content_margin_left = 20.0
+content_margin_top = 0.0
+content_margin_right = 20.0
+content_margin_bottom = 0.0
+bg_color = Color(0, 0, 0, 0.588235)
 
 [node name="Battle" type="Control"]
 layout_mode = 3
@@ -32,6 +74,7 @@ theme_override_constants/margin_bottom = 20
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 20
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -49,3 +92,84 @@ size_flags_horizontal = 3
 unique_name_in_owner = true
 layout_mode = 2
 text = "Gold: 0"
+
+[node name="BattleField" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 20
+
+[node name="HeroPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer/BattleField"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_th188")
+
+[node name="HeroColumn" type="VBoxContainer" parent="MarginContainer/VBoxContainer/BattleField/HeroPanel"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+
+[node name="HeroHealth" type="ProgressBar" parent="MarginContainer/VBoxContainer/BattleField/HeroPanel/HeroColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+value = 100.0
+
+[node name="HeroName" type="Label" parent="MarginContainer/VBoxContainer/BattleField/HeroPanel/HeroColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HeroVisual" type="TextureRect" parent="MarginContainer/VBoxContainer/BattleField/HeroPanel/HeroColumn"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+texture = ExtResource("3_p1qf1")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Control" type="Control" parent="MarginContainer/VBoxContainer/BattleField/HeroPanel/HeroColumn"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+
+[node name="AttackButton" type="Button" parent="MarginContainer/VBoxContainer/BattleField/HeroPanel/HeroColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_p1qf1")
+theme_override_styles/hover = SubResource("StyleBoxFlat_lpir7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_a12nh")
+theme_override_styles/normal = SubResource("StyleBoxFlat_6vh42")
+text = "ATTACK ⚔️"
+
+[node name="LogArea" type="PanelContainer" parent="MarginContainer/VBoxContainer/BattleField"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_p1qf1")
+
+[node name="BattleLog" type="RichTextLabel" parent="MarginContainer/VBoxContainer/BattleField/LogArea"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="EnemyPanel" type="PanelContainer" parent="MarginContainer/VBoxContainer/BattleField"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_th188")
+
+[node name="HeroColumn" type="VBoxContainer" parent="MarginContainer/VBoxContainer/BattleField/EnemyPanel"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+
+[node name="EnemyHealth" type="ProgressBar" parent="MarginContainer/VBoxContainer/BattleField/EnemyPanel/HeroColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+value = 100.0
+
+[node name="EnemyName" type="Label" parent="MarginContainer/VBoxContainer/BattleField/EnemyPanel/HeroColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="EnemyVisual" type="TextureRect" parent="MarginContainer/VBoxContainer/BattleField/EnemyPanel/HeroColumn"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/BattleField/HeroPanel/HeroColumn/AttackButton" to="." method="_on_attack_button_pressed"]
