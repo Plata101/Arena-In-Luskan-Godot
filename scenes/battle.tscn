@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bib0uw033c255"]
+[gd_scene load_steps=11 format=3 uid="uid://bib0uw033c255"]
 
 [ext_resource type="Texture2D" uid="uid://0p6iudqoif6n" path="res://assets/sprites/arena-bg.jpg" id="1_dn72j"]
 [ext_resource type="Script" uid="uid://funfqv4qk4gl" path="res://scripts/battle.gd" id="1_th188"]
@@ -14,6 +14,13 @@ corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4k1nj"]
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_p1qf1"]
 
@@ -125,7 +132,38 @@ texture = ExtResource("3_p1qf1")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Control" type="Control" parent="MarginContainer/VBoxContainer/BattleField/HeroPanel/HeroColumn"]
+[node name="Spacer2" type="Control" parent="MarginContainer/VBoxContainer/BattleField/HeroPanel/HeroColumn"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+
+[node name="HeroEquipment" type="HBoxContainer" parent="MarginContainer/VBoxContainer/BattleField/HeroPanel/HeroColumn"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="WeaponSlot" type="PanelContainer" parent="MarginContainer/VBoxContainer/BattleField/HeroPanel/HeroColumn/HeroEquipment"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4k1nj")
+
+[node name="HeroWeaponIcon" type="TextureRect" parent="MarginContainer/VBoxContainer/BattleField/HeroPanel/HeroColumn/HeroEquipment/WeaponSlot"]
+unique_name_in_owner = true
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ArmorSlot" type="PanelContainer" parent="MarginContainer/VBoxContainer/BattleField/HeroPanel/HeroColumn/HeroEquipment"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4k1nj")
+
+[node name="HeroArmorIcon" type="TextureRect" parent="MarginContainer/VBoxContainer/BattleField/HeroPanel/HeroColumn/HeroEquipment/ArmorSlot"]
+unique_name_in_owner = true
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/BattleField/HeroPanel/HeroColumn"]
 custom_minimum_size = Vector2(0, 15)
 layout_mode = 2
 
@@ -136,7 +174,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_p1qf1")
 theme_override_styles/hover = SubResource("StyleBoxFlat_lpir7")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_a12nh")
 theme_override_styles/normal = SubResource("StyleBoxFlat_6vh42")
-text = "ATTACK ⚔️"
+text = "Attack"
 
 [node name="LogArea" type="PanelContainer" parent="MarginContainer/VBoxContainer/BattleField"]
 layout_mode = 2
@@ -152,22 +190,53 @@ layout_mode = 2
 size_flags_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_th188")
 
-[node name="HeroColumn" type="VBoxContainer" parent="MarginContainer/VBoxContainer/BattleField/EnemyPanel"]
+[node name="EnemyColumn" type="VBoxContainer" parent="MarginContainer/VBoxContainer/BattleField/EnemyPanel"]
 custom_minimum_size = Vector2(150, 0)
 layout_mode = 2
 
-[node name="EnemyHealth" type="ProgressBar" parent="MarginContainer/VBoxContainer/BattleField/EnemyPanel/HeroColumn"]
+[node name="EnemyHealth" type="ProgressBar" parent="MarginContainer/VBoxContainer/BattleField/EnemyPanel/EnemyColumn"]
 unique_name_in_owner = true
 layout_mode = 2
 value = 100.0
 
-[node name="EnemyName" type="Label" parent="MarginContainer/VBoxContainer/BattleField/EnemyPanel/HeroColumn"]
+[node name="EnemyName" type="Label" parent="MarginContainer/VBoxContainer/BattleField/EnemyPanel/EnemyColumn"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="EnemyVisual" type="TextureRect" parent="MarginContainer/VBoxContainer/BattleField/EnemyPanel/HeroColumn"]
+[node name="EnemyVisual" type="TextureRect" parent="MarginContainer/VBoxContainer/BattleField/EnemyPanel/EnemyColumn"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 150)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/BattleField/EnemyPanel/EnemyColumn"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+
+[node name="EnemyEquipment" type="HBoxContainer" parent="MarginContainer/VBoxContainer/BattleField/EnemyPanel/EnemyColumn"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="WeaponSlot" type="PanelContainer" parent="MarginContainer/VBoxContainer/BattleField/EnemyPanel/EnemyColumn/EnemyEquipment"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4k1nj")
+
+[node name="EnemyWeaponIcon" type="TextureRect" parent="MarginContainer/VBoxContainer/BattleField/EnemyPanel/EnemyColumn/EnemyEquipment/WeaponSlot"]
+unique_name_in_owner = true
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ArmorSlot" type="PanelContainer" parent="MarginContainer/VBoxContainer/BattleField/EnemyPanel/EnemyColumn/EnemyEquipment"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4k1nj")
+
+[node name="EnemyArmorIcon" type="TextureRect" parent="MarginContainer/VBoxContainer/BattleField/EnemyPanel/EnemyColumn/EnemyEquipment/ArmorSlot"]
+unique_name_in_owner = true
 layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
