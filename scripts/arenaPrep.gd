@@ -46,7 +46,7 @@ var enemies = [
 	{
 		"id": "troll",
 		"name": "Cave Troll",
-		"hp": 100,
+		"hp": 200,
 		"damage": 12,
 		"reward_gold": 100,
 		"icon": "res://assets/sprites/troll.png",

@@ -1,59 +1,89 @@
 extends Control
 
+# --- UI REFERENZEN (Unique Names) ---
+# Header & Navigation
 @onready var goldLabel = %GoldLabel
 @onready var btnBack = %BtnBack 
+
+# Hero Stats & UI
+@onready var heroName = %HeroName
+@onready var heroHealthBar = %HeroHealth   # WICHTIG: Muss im Editor existieren!
+@onready var heroVisual = %HeroVisual     # WICHTIG: Muss im Editor existieren!
+@onready var heroWeaponIcon = %HeroWeaponIcon
+@onready var heroArmorIcon = %HeroArmorIcon
+
+# Enemy Stats & UI
 @onready var enemyName = %EnemyName
 @onready var enemyHealthBar = %EnemyHealth
 @onready var enemyVisual = %EnemyVisual
-@onready var heroWeaponIcon = %HeroWeaponIcon
-@onready var heroArmorIcon = %HeroArmorIcon
 @onready var enemyWeaponIcon = %EnemyWeaponIcon
 @onready var enemyArmorIcon = %EnemyArmorIcon
 
-
+# Kampf-Interface
 @onready var battleLog = %BattleLog
 @onready var attackButton = %AttackButton
+@onready var surrenderButton = %SurrenderButton # Tippfehler korrigiert
 
-@onready var heroName = %HeroName
+# --- SPIEL LOGIK VARIABLEN ---
+var current_enemy_max_hp = 0
+var current_enemy_hp = 0
+var current_hero_hp = 100 
+var max_hero_hp = 100
 
+# Schadenswerte
+var hero_damage = 15      # Festwert (später Variabel)
+var enemy_damage = 8      # Wird durch setupBattle überschrieben
+
+
+# --- LIFECYCLE ---
 
 func _ready():
-	
-		# HELD EQUIPMENT LADEN (Dummy Daten für MVP)
-	# Später holen wir das aus GameManager.player_equipment
-	load_slot(heroWeaponIcon, "res://assets/sprites/morningstar.png")
-	load_slot(heroArmorIcon, "res://assets/sprites/scale.png")
-	
-	
+	# 1. UI Initialisieren
 	if goldLabel:
 		goldLabel.text = "Gold: " + str(GameManager.currentGold)
 	
 	if btnBack:
 		btnBack.pressed.connect(_on_btn_back_pressed)
-		
+		btnBack.disabled = true # Flucht ist erst nach Sieg oder Niederlage möglich
+	
+	# 2. Buttons verbinden (ACHTUNG: ohne "()" am Ende!)
+	attackButton.pressed.connect(_on_attack_button_pressed)
+	surrenderButton.pressed.connect(_on_surrender_button_pressed)
+	
+	# 3. Held Equipment laden (Dummy Daten)
+	load_slot(heroWeaponIcon, "res://assets/sprites/morningstar.png")
+	load_slot(heroArmorIcon, "res://assets/sprites/scale.png")
+	
+	# 4. Kampf vorbereiten
 	if GameManager.currentEnemy:
 		setupBattle(GameManager.currentEnemy)
 	else:
-		logText("[color=red]No opponent found![/color]")
-		
+		logText("[color=red]Error: No opponent found![/color]")
+
+# --- SETUP ---
 
 func setupBattle(enemyData):
 	# Namen setzen
 	heroName.text = "Hero"
 	enemyName.text = enemyData.get("name", "Unknown")
 	
-	# HP setzen
-	var maxHp = enemyData.get("hp", 10)
-	enemyHealthBar.max_value = maxHp
-	enemyHealthBar.value = maxHp
+	# Interne Variablen setzen
+	current_enemy_max_hp = enemyData.get("hp", 20)
+	current_enemy_hp = current_enemy_max_hp
+	enemy_damage = enemyData.get("damage", 5)
 	
-	# Bild / Rüstung setzten
+	# Health Bars initialisieren
+	enemyHealthBar.max_value = current_enemy_max_hp
+	enemyHealthBar.value = current_enemy_hp
+	
+	heroHealthBar.max_value = max_hero_hp
+	heroHealthBar.value = current_hero_hp
+	
+	# Gegner Bild laden
 	if "icon" in enemyData and enemyData["icon"] != null:
-		# WICHTIG: Wir müssen den Pfad (String) laden!
 		enemyVisual.texture = load(enemyData["icon"])
 	
-	# GEGNER EQUIPMENT LADEN
-	# Wir nutzen eine Hilfsfunktion, falls kein Icon da ist
+	# Gegner Equipment laden
 	if "weapon" in enemyData:
 		load_slot(enemyWeaponIcon, enemyData["weapon"])
 	else:
@@ -64,65 +94,135 @@ func setupBattle(enemyData):
 	else:
 		clear_slot(enemyArmorIcon)
 		
-	# Start message
+	# Startnachricht
 	logText("A wild [b]" + enemyName.text + "[/b] enters the arena!")
 
+# --- KAMPF LOGIK (RUNDENBASIERT) ---
 
-# HELPER FUNCTIONS
+func _on_attack_button_pressed():
+	# Buttons sperren, damit Spieler nicht spammen kann
+	attackButton.disabled = true
+	surrenderButton.disabled = true
+	
+	# --- RUNDE 1: HELD GREIFT AN ---
+	var dmg = hero_damage # Hier später Random (z.B. randi_range(10, 15))
+	current_enemy_hp -= dmg
+	
+	# Visuelles Feedback
+	logText("You attack for [color=green]" + str(dmg) + " damage[/color]!")
+	animate_damage(enemyVisual)
+	update_health_bar(enemyHealthBar, current_enemy_hp)
+	
+	# Check: Gegner besiegt?
+	if current_enemy_hp <= 0:
+		win_battle()
+		return # Funktion beenden, Gegner ist tot
+	
+	# Kurze Pause für Spannung (1 Sekunde)
+	await get_tree().create_timer(1.0).timeout
+	
+	# --- RUNDE 2: GEGNER GREIFT AN ---
+	logText("The " + enemyName.text + " prepares to strike...")
+	
+	# Pause für Reaktion
+	await get_tree().create_timer(1.0).timeout
+	
+	var received_dmg = enemy_damage
+	current_hero_hp -= received_dmg
+	
+	# Visuelles Feedback
+	logText("The enemy hits you for [color=red]" + str(received_dmg) + " damage[/color]!")
+	if heroVisual:
+		animate_damage(heroVisual)
+	update_health_bar(heroHealthBar, current_hero_hp)
+	
+	# Check: Held besiegt?
+	if current_hero_hp <= 0:
+		lose_battle("dead")
+		return # Funktion beenden
+	
+	# --- ENDE DER RUNDE ---
+	# Buttons wieder freigeben
+	attackButton.disabled = false
+	surrenderButton.disabled = false
 
-func load_slot(icon_node: TextureRect, path: String):
-	print("Versuche Slot zu laden: ", path) # DEBUG
-	if path and ResourceLoader.exists(path):
-		icon_node.texture = load(path)
-		icon_node.visible = true
+func _on_surrender_button_pressed():
+	lose_battle("surrender")
+
+# --- GEWINNEN / VERLIEREN ---
+
+func win_battle():
+	logText("\n[b][color=yellow]VICTORY![/color][/b]")
+	logText("You stomp your enemy into the ground.")
+	
+	# Belohnung
+	var reward = GameManager.currentEnemy.get("reward_gold", 0)
+	GameManager.currentGold += reward
+	goldLabel.text = "Gold: " + str(GameManager.currentGold)
+	
+	# Navigation aktivieren
+	btnBack.disabled = false
+	btnBack.text = "Return to City like a king"
+	
+	# Kampf Buttons deaktiviert lassen
+	attackButton.disabled = true
+	surrenderButton.disabled = true
+
+func lose_battle(reason):
+	attackButton.disabled = true
+	surrenderButton.disabled = true
+	
+	logText("\n[b][color=red]DEFEAT...[/color][/b]")
+	
+	if reason == "surrender":
+		logText("You threw in the towel and ran away.")
 	else:
-		# Falls Pfad falsch oder leer -> Slot leer anzeigen
-		icon_node.texture = null
+		logText("You are severely wounded and drag yourself out of the arena.")
+	
+	btnBack.disabled = false
+	btnBack.text = "Limp back to City"
 
-func clear_slot(icon_node: TextureRect):
-	icon_node.texture = null
+# --- VISUALS & ANIMATIONS ---
 
+func update_health_bar(bar: ProgressBar, new_value: int):
+	# Erstellt eine flüssige Animation des Balkens
+	var tween = create_tween()
+	tween.tween_property(bar, "value", new_value, 0.4).set_trans(Tween.TRANS_SINE)
 
-
-# LOG
-
+func animate_damage(target_visual: Control):
+	if target_visual == null: return
+	
+	# 1. Rot aufblitzen
+	var color_tween = create_tween()
+	color_tween.tween_property(target_visual, "modulate", Color(1, 0.3, 0.3), 0.1)
+	color_tween.tween_property(target_visual, "modulate", Color.WHITE, 0.1)
+	
+	# 2. Wackeln (Shake)
+	var shake_tween = create_tween()
+	var original_pos = target_visual.position
+	var strength = 5.0 # Stärke in Pixeln
+	
+	shake_tween.tween_property(target_visual, "position:x", original_pos.x + strength, 0.05)
+	shake_tween.tween_property(target_visual, "position:x", original_pos.x - strength, 0.05)
+	shake_tween.tween_property(target_visual, "position:x", original_pos.x, 0.05)
 
 func logText(text: String):
 	battleLog.append_text("\n" + text)
 
+# --- HELPER FUNCTIONS ---
 
-# BUTTONS
+func load_slot(icon_node: TextureRect, path: String):
+	if icon_node == null: return
+	
+	if path and ResourceLoader.exists(path):
+		icon_node.texture = load(path)
+		icon_node.visible = true
+	else:
+		icon_node.texture = null
+
+func clear_slot(icon_node: TextureRect):
+	if icon_node:
+		icon_node.texture = null
 
 func _on_btn_back_pressed():
 	get_tree().change_scene_to_file("res://scenes/city_hub.tscn")
-
-func _on_attack_button_pressed():
-	animateDamage(enemyVisual)
-	logText("You attack! (Logik folgt...)")
-
-
-# ANIMATIONS
-
-func animateDamage(target_visual: Control):
-	# Einen neuen "Tween" (Zwischenbild-Berechner) erstellen
-	var tween = create_tween()
-	
-	# 1. Rot aufblitzen (Modulate Farbe ändern)
-	# Von normal (weiss) zu rot in 0.1 sekunden
-	tween.tween_property(target_visual, "modulate", Color(1, 0.3, 0.3), 0.1)
-	# Und wieder zurück zu weiss
-	tween.tween_property(target_visual, "modulate", Color.WHITE, 0.1)
-	
-	# 2. Wackeln (Parallel dazu)
-	# Da wir "shake" wollen, machen wir das etwas manueller oder simpler:
-	# Wir schieben das Bild kurz nach rechts und links
-	var shake_tween = create_tween()
-	var original_pos = target_visual.position # Die aktuelle Position merken
-	var strength = 2.0 # Wie stark es wackelt (in Pixeln)
-	
-	# Schritt 1: Nach rechts schieben (in 0.05 Sek)
-	shake_tween.tween_property(target_visual, "position:x", original_pos.x + strength, 0.05)
-	# Schritt 2: Nach links schieben (über die Mitte hinaus)
-	shake_tween.tween_property(target_visual, "position:x", original_pos.x - strength, 0.05)
-	# Schritt 3: Wieder zurück zur Original-Position
-	shake_tween.tween_property(target_visual, "position:x", original_pos.x, 0.05)

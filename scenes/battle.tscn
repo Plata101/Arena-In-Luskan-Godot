@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bib0uw033c255"]
+[gd_scene load_steps=13 format=3 uid="uid://bib0uw033c255"]
 
 [ext_resource type="Texture2D" uid="uid://0p6iudqoif6n" path="res://assets/sprites/arena-bg.jpg" id="1_dn72j"]
 [ext_resource type="Script" uid="uid://funfqv4qk4gl" path="res://scripts/battle.gd" id="1_th188"]
@@ -40,6 +40,19 @@ corner_radius_bottom_left = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6vh42"]
 bg_color = Color(0.819608, 0, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yahae"]
+bg_color = Color(0.360784, 0.360784, 0.360784, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f4pi3"]
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
@@ -142,7 +155,7 @@ theme_override_constants/separation = 10
 alignment = 1
 
 [node name="WeaponSlot" type="PanelContainer" parent="MarginContainer/VBoxContainer/BattleField/HeroPanel/HeroColumn/HeroEquipment"]
-custom_minimum_size = Vector2(50, 50)
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_4k1nj")
 
@@ -153,7 +166,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="ArmorSlot" type="PanelContainer" parent="MarginContainer/VBoxContainer/BattleField/HeroPanel/HeroColumn/HeroEquipment"]
-custom_minimum_size = Vector2(50, 50)
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_4k1nj")
 
@@ -175,6 +188,19 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_lpir7")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_a12nh")
 theme_override_styles/normal = SubResource("StyleBoxFlat_6vh42")
 text = "Attack"
+
+[node name="Spacer3" type="Control" parent="MarginContainer/VBoxContainer/BattleField/HeroPanel/HeroColumn"]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+
+[node name="SurrenderButton" type="Button" parent="MarginContainer/VBoxContainer/BattleField/HeroPanel/HeroColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_p1qf1")
+theme_override_styles/hover = SubResource("StyleBoxFlat_yahae")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_a12nh")
+theme_override_styles/normal = SubResource("StyleBoxFlat_f4pi3")
+text = "Surrender 🏳️"
 
 [node name="LogArea" type="PanelContainer" parent="MarginContainer/VBoxContainer/BattleField"]
 layout_mode = 2
@@ -220,7 +246,7 @@ theme_override_constants/separation = 10
 alignment = 1
 
 [node name="WeaponSlot" type="PanelContainer" parent="MarginContainer/VBoxContainer/BattleField/EnemyPanel/EnemyColumn/EnemyEquipment"]
-custom_minimum_size = Vector2(50, 50)
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_4k1nj")
 
@@ -231,7 +257,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="ArmorSlot" type="PanelContainer" parent="MarginContainer/VBoxContainer/BattleField/EnemyPanel/EnemyColumn/EnemyEquipment"]
-custom_minimum_size = Vector2(50, 50)
+custom_minimum_size = Vector2(60, 60)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_4k1nj")
 
@@ -242,3 +268,4 @@ expand_mode = 1
 stretch_mode = 5
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/BattleField/HeroPanel/HeroColumn/AttackButton" to="." method="_on_attack_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/BattleField/HeroPanel/HeroColumn/SurrenderButton" to="." method="_on_surrender_button_pressed"]
