@@ -11,6 +11,7 @@ extends Control
 @onready var heroVisual = %HeroVisual     # WICHTIG: Muss im Editor existieren!
 @onready var heroWeaponIcon = %HeroWeaponIcon
 @onready var heroArmorIcon = %HeroArmorIcon
+@onready var bountyLabel = %BountyLabel
 
 # Enemy Stats & UI
 @onready var enemyName = %EnemyName
@@ -33,6 +34,9 @@ var max_hero_hp = 100
 # Schadenswerte
 var hero_damage = 15      # Festwert (später Variabel)
 var enemy_damage = 8      # Wird durch setupBattle überschrieben
+# Battlelog container
+var log_history = [] # Ein Array für die Nachrichten
+const MAX_LOG_LINES = 7 # Wie viele Zeilen du maximal willst
 
 
 # --- LIFECYCLE ---
@@ -71,6 +75,10 @@ func setupBattle(enemyData):
 	current_enemy_max_hp = enemyData.get("hp", 20)
 	current_enemy_hp = current_enemy_max_hp
 	enemy_damage = enemyData.get("damage", 5)
+	
+	# Bounty / Reward anzeigen
+	var reward = enemyData.get("reward_gold", 0)
+	bountyLabel.text = "BOUNTY: " + str(reward) + " GOLD"
 	
 	# Health Bars initialisieren
 	enemyHealthBar.max_value = current_enemy_max_hp
@@ -207,7 +215,19 @@ func animate_damage(target_visual: Control):
 	shake_tween.tween_property(target_visual, "position:x", original_pos.x, 0.05)
 
 func logText(text: String):
-	battleLog.append_text("\n" + text)
+	# 1. Neue Nachricht ins Array packen
+	log_history.append(text)
+	
+	# 2. Prüfen, ob wir zu viele haben (Array.size() statt .length)
+	if log_history.size() > MAX_LOG_LINES:
+		log_history.pop_front() # Das älteste Element löschen (wie shift())
+	
+	# 3. Das Textfeld leeren und neu befüllen
+	battleLog.clear()
+	
+	for line in log_history:
+		# Wir fügen jede Zeile aus dem Gedächtnis wieder ein
+		battleLog.append_text("\n" + line)
 
 # --- HELPER FUNCTIONS ---
 
@@ -225,4 +245,6 @@ func clear_slot(icon_node: TextureRect):
 		icon_node.texture = null
 
 func _on_btn_back_pressed():
+	# Wenn wir die Arena verlassen, wird es Nacht!
+	GameManager.is_night = true
 	get_tree().change_scene_to_file("res://scenes/city_hub.tscn")
