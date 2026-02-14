@@ -174,4 +174,17 @@ theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_gk2vu")
 text = "FIGHT 🗡️"
 
+[node name="BlackOverlay" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 984.0
+offset_bottom = 560.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
 [connection signal="pressed" from="MarginContainer/VBoxContainer/MainContent/PreviewPanel (right)/MarginContainer/Preview Content/ButtonContainer/BtnFight" to="." method="_on_btn_fight_pressed"]

@@ -7,6 +7,7 @@ extends Control
 @onready var enemyStatsLabel = %EnemyStatsLabel
 @onready var dangerLabel = %DangerLabel
 @onready var fightButton = %BtnFight
+@onready var blackOverlay = %BlackOverlay
 
 @onready var goldLabel = %GoldLabel
 @onready var descriptionLabel = %DescriptionLabel 
@@ -59,7 +60,10 @@ var enemies = [
 ]
 
 func _ready():
-	
+	# FADE IN
+	blackOverlay.modulate.a = 1.0 
+	var tween = create_tween()
+	tween.tween_property(blackOverlay, "modulate:a", 0.0, 0.4)
 	# 1. Header Updates (Gold anzeigen)
 	if goldLabel:
 		goldLabel.text = "Gold: " + str(GameManager.currentGold)
@@ -142,6 +146,14 @@ func calculate_danger_level(data):
 		dangerLabel.modulate = Color(0, 1, 0) # Grün
 
 func _on_btn_fight_pressed():
+			# 1. Maus blockieren
+	if blackOverlay: blackOverlay.mouse_filter = Control.MOUSE_FILTER_STOP
+	
+	# 2. Fade Out (Schwarz werden) - SCHNELLER (0.4s)
+	var tween = create_tween()
+	if blackOverlay:
+		tween.tween_property(blackOverlay, "modulate:a", 1.0, 0.4)
+		await tween.finished
 	# Hier übergeben wir den Gegner an den GameManager, damit die Battle-Szene weiß, wer dran ist
 	# Das bauen wir gleich in Schritt 3 ein!
 	GameManager.currentEnemy = selectedEnemyData
@@ -150,4 +162,12 @@ func _on_btn_fight_pressed():
 	get_tree().change_scene_to_file("res://scenes/battle.tscn")
 
 func _on_btn_back_pressed():
+		# 1. Maus blockieren
+	if blackOverlay: blackOverlay.mouse_filter = Control.MOUSE_FILTER_STOP
+	
+	# 2. Fade Out (Schwarz werden) - SCHNELLER (0.4s)
+	var tween = create_tween()
+	if blackOverlay:
+		tween.tween_property(blackOverlay, "modulate:a", 1.0, 0.4)
+		await tween.finished
 	get_tree().change_scene_to_file("res://scenes/city_hub.tscn")

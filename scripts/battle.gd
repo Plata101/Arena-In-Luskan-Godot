@@ -19,6 +19,7 @@ extends Control
 @onready var enemyVisual = %EnemyVisual
 @onready var enemyWeaponIcon = %EnemyWeaponIcon
 @onready var enemyArmorIcon = %EnemyArmorIcon
+@onready var blackOverlay = %BlackOverlay
 
 # Kampf-Interface
 @onready var battleLog = %BattleLog
@@ -28,7 +29,7 @@ extends Control
 # --- SPIEL LOGIK VARIABLEN ---
 var current_enemy_max_hp = 0
 var current_enemy_hp = 0
-var current_hero_hp = 100 
+var current_hero_hp = 0 
 var max_hero_hp = 100
 
 # Schadenswerte
@@ -42,6 +43,13 @@ const MAX_LOG_LINES = 7 # Wie viele Zeilen du maximal willst
 # --- LIFECYCLE ---
 
 func _ready():
+	# FADE IN (Vorhang auf)
+	# Wir zwingen es sicherheitshalber auf Schwarz (falls im Editor vergessen)
+	blackOverlay.modulate.a = 1.0 
+	
+	var tween = create_tween()
+	# In 1.0 Sekunden von Schwarz (1) zu Transparent (0)
+	tween.tween_property(blackOverlay, "modulate:a", 0.0, 0.4)
 	# 1. UI Initialisieren
 	if goldLabel:
 		goldLabel.text = "Gold: " + str(GameManager.currentGold)
@@ -69,6 +77,9 @@ func _ready():
 func setupBattle(enemyData):
 	# Namen setzen
 	heroName.text = "Hero"
+	current_hero_hp = GameManager.playerHp
+	max_hero_hp = GameManager.playerMaxHp
+	
 	enemyName.text = enemyData.get("name", "Unknown")
 	
 	# Interne Variablen setzen
@@ -245,6 +256,15 @@ func clear_slot(icon_node: TextureRect):
 		icon_node.texture = null
 
 func _on_btn_back_pressed():
+		# 1. Maus blockieren
+	if blackOverlay: blackOverlay.mouse_filter = Control.MOUSE_FILTER_STOP
+	
+	# 2. Fade Out (Schwarz werden) - SCHNELLER (0.4s)
+	var tween = create_tween()
+	if blackOverlay:
+		tween.tween_property(blackOverlay, "modulate:a", 1.0, 0.4)
+		await tween.finished
+	GameManager.playerHp = current_hero_hp
 	# Wenn wir die Arena verlassen, wird es Nacht!
 	GameManager.is_night = true
 	get_tree().change_scene_to_file("res://scenes/city_hub.tscn")

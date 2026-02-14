@@ -1,0 +1,99 @@
+[gd_scene load_steps=3 format=3 uid="uid://buh2u8mdvm3t1"]
+
+[ext_resource type="Script" uid="uid://bp8kc1x305avo" path="res://scripts/tavern.gd" id="1_ejety"]
+[ext_resource type="Texture2D" uid="uid://devh8gcnx1w8p" path="res://assets/sprites/tavern-day-bg.jpg" id="1_ydnal"]
+
+[node name="Tavern" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_ejety")
+
+[node name="Background" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 984.0
+offset_bottom = 560.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_ydnal")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_right = 1024.0
+offset_bottom = 600.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="BtnBack" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "← back to the city"
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="GoldLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Gold: 0"
+
+[node name="BtnSleep" type="Button" parent="."]
+unique_name_in_owner = true
+offset_left = 785.0
+offset_top = 67.0
+offset_right = 897.0
+offset_bottom = 98.0
+text = "Go to sleep "
+
+[node name="BtnEvents" type="Button" parent="."]
+unique_name_in_owner = true
+offset_left = 591.0
+offset_top = 158.0
+offset_right = 703.0
+offset_bottom = 189.0
+text = "Events"
+
+[node name="BtnFood" type="Button" parent="."]
+unique_name_in_owner = true
+offset_left = 191.0
+offset_top = 258.0
+offset_right = 303.0
+offset_bottom = 289.0
+text = "Eat & drink"
+
+[node name="BtnRumors" type="Button" parent="."]
+unique_name_in_owner = true
+offset_left = 390.0
+offset_top = 408.0
+offset_right = 502.0
+offset_bottom = 439.0
+text = "Rumors"
+
+[node name="BlackOverlay" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 984.0
+offset_bottom = 560.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)

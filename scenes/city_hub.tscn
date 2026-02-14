@@ -18,32 +18,32 @@ size_flags_vertical = 4
 texture = ExtResource("1_cnwv7")
 expand_mode = 5
 
-[node name="UI" type="CanvasLayer" parent="."]
-
-[node name="HBoxContainer" type="HBoxContainer" parent="UI"]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 210.0
+offset_left = 29.0
 offset_top = 5.0
-offset_right = -314.0
+offset_right = 255.0
 offset_bottom = 44.0
 grow_horizontal = 2
 scale = Vector2(0.931778, 1.0797)
 theme_override_constants/separation = 50
 
-[node name="GoldLabel" type="Label" parent="UI/HBoxContainer"]
+[node name="GoldLabel" type="Label" parent="HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.101961, 0.0313726, 0.0235294, 1)
 theme_override_font_sizes/font_size = 28
 text = "Gold: 0"
 
-[node name="DayLabel" type="Label" parent="UI/HBoxContainer"]
+[node name="DayLabel" type="Label" parent="HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.101961, 0.0313726, 0.0235294, 1)
 theme_override_font_sizes/font_size = 28
 text = "Day: 1"
+
+[node name="UI" type="CanvasLayer" parent="."]
 
 [node name="BtnArena" type="Button" parent="."]
 unique_name_in_owner = true
@@ -77,6 +77,20 @@ offset_right = 435.0
 offset_bottom = 435.0
 text = "Enter Armory"
 
+[node name="BlackOverlay" type="ColorRect" parent="."]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1200.0
+offset_bottom = 700.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
 [connection signal="pressed" from="BtnArena" to="." method="_on_btn_arena_pressed"]
 [connection signal="pressed" from="BtnShop" to="." method="_on_btn_shop_pressed"]
+[connection signal="pressed" from="BtnTavern" to="." method="_on_btn_tavern_pressed"]
 [connection signal="pressed" from="BtnArmory" to="." method="_on_btn_armory_pressed"]

@@ -4,6 +4,7 @@ extends Control
 @onready var goldLabel = %GoldLabel
 @onready var gridContainer = %GridContainer
 @onready var inventoryGrid = %InventoryGrid
+@onready var blackOverlay = %BlackOverlay
 
 # Vorlage laden
 var shopItemScene = preload("res://scenes/shop_item.tscn")
@@ -29,6 +30,10 @@ var shopInventory = [
 ]
 
 func _ready():
+	# FADE IN
+	blackOverlay.modulate.a = 1.0 
+	var tween = create_tween()
+	tween.tween_property(blackOverlay, "modulate:a", 0.0, 0.4)
 	update_ui()
 	generate_shop_items()
 	update_inventory_view() # NEU: Initiales Laden des Inventars
@@ -69,6 +74,14 @@ func update_inventory_view():
 	currentInventorySize = GameManager.inventory.size()
 		
 func _on_btn_back_pressed():
+		# 1. Maus blockieren
+	if blackOverlay: blackOverlay.mouse_filter = Control.MOUSE_FILTER_STOP
+	
+	# 2. Fade Out (Schwarz werden) - SCHNELLER (0.4s)
+	var tween = create_tween()
+	if blackOverlay:
+		tween.tween_property(blackOverlay, "modulate:a", 1.0, 0.4)
+		await tween.finished
 	get_tree().change_scene_to_file("res://scenes/city_hub.tscn")
 	
 func _process(delta):
