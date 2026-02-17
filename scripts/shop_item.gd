@@ -72,6 +72,9 @@ func buy_item():
 		
 		# 3. WICHTIG: Item ins globale Inventar legen!
 		GameManager.inventory.append(itemData)
+		# 4. Update Gold Label
+		if GameManager.main_node:
+			GameManager.main_node.update_ui()
 		
 		print("Purchased: ", itemData["name"])
 		
@@ -90,6 +93,10 @@ func sell_item():
 	# 3. Aus globalem Inventar löschen
 	# erase entfernt das erste Vorkommen dieses Daten-Objekts
 	GameManager.inventory.erase(itemData)
+	
+	# 4. Update Gold Label
+	if GameManager.main_node:
+		GameManager.main_node.update_ui()
 	
 	print("Sold: ", itemData["name"])
 	

@@ -88,30 +88,13 @@ layout_mode = 0
 offset_right = 1024.0
 offset_bottom = 600.0
 theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
+theme_override_constants/margin_top = 80
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 20
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="BtnBack" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "← back to the city"
-
-[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="GoldLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Gold: 0"
 
 [node name="BattleField" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -284,19 +267,6 @@ unique_name_in_owner = true
 layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
-
-[node name="BlackOverlay" type="ColorRect" parent="."]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 1024.0
-offset_bottom = 600.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(0, 0, 0, 1)
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/BattleField/HeroPanel/HeroColumn/AttackButton" to="." method="_on_attack_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/BattleField/HeroPanel/HeroColumn/SurrenderButton" to="." method="_on_surrender_button_pressed"]

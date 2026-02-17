@@ -1,19 +1,18 @@
 extends Control
 
-# --- UI REFERENZEN (Unique Names) ---
-# Header & Navigation
-@onready var goldLabel = %GoldLabel
-@onready var btnBack = %BtnBack 
+# --- UI REFERENZEN ---
+# Wir löschen die lokalen @onready vars für Header & Navigation, 
+# da wir diese nun dynamisch aus der Main-Scene holen.
 
-# Hero Stats & UI
+# Hero Stats & UI (Lokal in der Battle Scene)
 @onready var heroName = %HeroName
-@onready var heroHealthBar = %HeroHealth   # WICHTIG: Muss im Editor existieren!
-@onready var heroVisual = %HeroVisual     # WICHTIG: Muss im Editor existieren!
+@onready var heroHealthBar = %HeroHealth   
+@onready var heroVisual = %HeroVisual     
 @onready var heroWeaponIcon = %HeroWeaponIcon
 @onready var heroArmorIcon = %HeroArmorIcon
 @onready var bountyLabel = %BountyLabel
 
-# Enemy Stats & UI
+# Enemy Stats & UI (Lokal in der Battle Scene)
 @onready var enemyName = %EnemyName
 @onready var enemyHealthBar = %EnemyHealth
 @onready var enemyVisual = %EnemyVisual
@@ -21,10 +20,14 @@ extends Control
 @onready var enemyArmorIcon = %EnemyArmorIcon
 @onready var blackOverlay = %BlackOverlay
 
-# Kampf-Interface
+# Kampf-Interface (Lokal)
 @onready var battleLog = %BattleLog
 @onready var attackButton = %AttackButton
-@onready var surrenderButton = %SurrenderButton # Tippfehler korrigiert
+@onready var surrenderButton = %SurrenderButton
+
+# --- NEUE VARIABLEN FÜR DIE HAUPT-UI ---
+var main_back_btn: Button
+var main_gold_label: Label
 
 # --- SPIEL LOGIK VARIABLEN ---
 var current_enemy_max_hp = 0
@@ -32,37 +35,45 @@ var current_enemy_hp = 0
 var current_hero_hp = 0 
 var max_hero_hp = 100
 
-# Schadenswerte
-var hero_damage = 15      # Festwert (später Variabel)
-var enemy_damage = 8      # Wird durch setupBattle überschrieben
-# Battlelog container
-var log_history = [] # Ein Array für die Nachrichten
-const MAX_LOG_LINES = 7 # Wie viele Zeilen du maximal willst
+var hero_damage = 15     
+var enemy_damage = 8     
+var log_history = [] 
+const MAX_LOG_LINES = 7 
 
 
 # --- LIFECYCLE ---
 
 func _ready():
-	# FADE IN (Vorhang auf)
-	# Wir zwingen es sicherheitshalber auf Schwarz (falls im Editor vergessen)
-	blackOverlay.modulate.a = 1.0 
+	# 1. HAUPT-UI VERBINDEN
+	# Wir suchen die Buttons in der Main-Scene über den GameManager
+	if GameManager.main_node:
+		# "true" bedeutet rekursive Suche (findet den Button auch in Unter-Containern)
+		main_back_btn = GameManager.main_node.find_child("BtnBack", true, false)
+		main_gold_label = GameManager.main_node.find_child("GoldLabel", true, false)
+		
+		if main_back_btn:
+			# Wir kapern den Zurück-Button für den Kampf
+			# Button vorübergehend UNSICHTBAR machen
+			main_back_btn.visible = false
+			# Wichtig: Erst alte Verbindungen trennen (falls vorhanden), damit er nicht direkt Szenen wechselt
+			if main_back_btn.pressed.is_connected(GameManager.change_scene): 
+				# Optional, falls du eine Standard-Funktion drauf hast. 
+				# Wenn nicht, reicht das Connect unten.
+				pass 
+			
+			# Verbinde unsere Kampf-Ende-Logik
+			if not main_back_btn.pressed.is_connected(_on_btn_back_pressed):
+				main_back_btn.pressed.connect(_on_btn_back_pressed)
+			
+		if main_gold_label:
+			main_gold_label.text = "Gold: " + str(GameManager.currentGold)
+
 	
-	var tween = create_tween()
-	# In 1.0 Sekunden von Schwarz (1) zu Transparent (0)
-	tween.tween_property(blackOverlay, "modulate:a", 0.0, 0.4)
-	# 1. UI Initialisieren
-	if goldLabel:
-		goldLabel.text = "Gold: " + str(GameManager.currentGold)
-	
-	if btnBack:
-		btnBack.pressed.connect(_on_btn_back_pressed)
-		btnBack.disabled = true # Flucht ist erst nach Sieg oder Niederlage möglich
-	
-	# 2. Buttons verbinden (ACHTUNG: ohne "()" am Ende!)
+	# 2. Kampf-Buttons verbinden
 	attackButton.pressed.connect(_on_attack_button_pressed)
 	surrenderButton.pressed.connect(_on_surrender_button_pressed)
 	
-	# 3. Held Equipment laden (Dummy Daten)
+	# 3. Held Equipment laden
 	load_slot(heroWeaponIcon, "res://assets/sprites/morningstar.png")
 	load_slot(heroArmorIcon, "res://assets/sprites/scale.png")
 	
@@ -72,37 +83,38 @@ func _ready():
 	else:
 		logText("[color=red]Error: No opponent found![/color]")
 
-# --- SETUP ---
+# WICHTIG: Aufräumen, wenn die Szene verlassen wird
+func _exit_tree():
+	# Wir müssen die Verbindung lösen, sonst feuert der Button Fehler, wenn die Battle-Scene weg ist
+	if main_back_btn and main_back_btn.pressed.is_connected(_on_btn_back_pressed):
+		main_back_btn.pressed.disconnect(_on_btn_back_pressed)
+		main_back_btn.text = "Back to City"
+
+# --- SETUP (Unverändert) ---
 
 func setupBattle(enemyData):
-	# Namen setzen
 	heroName.text = "Hero"
 	current_hero_hp = GameManager.playerHp
 	max_hero_hp = GameManager.playerMaxHp
 	
 	enemyName.text = enemyData.get("name", "Unknown")
 	
-	# Interne Variablen setzen
 	current_enemy_max_hp = enemyData.get("hp", 20)
 	current_enemy_hp = current_enemy_max_hp
 	enemy_damage = enemyData.get("damage", 5)
 	
-	# Bounty / Reward anzeigen
 	var reward = enemyData.get("reward_gold", 0)
 	bountyLabel.text = "BOUNTY: " + str(reward) + " GOLD"
 	
-	# Health Bars initialisieren
 	enemyHealthBar.max_value = current_enemy_max_hp
 	enemyHealthBar.value = current_enemy_hp
 	
 	heroHealthBar.max_value = max_hero_hp
 	heroHealthBar.value = current_hero_hp
 	
-	# Gegner Bild laden
 	if "icon" in enemyData and enemyData["icon"] != null:
 		enemyVisual.texture = load(enemyData["icon"])
 	
-	# Gegner Equipment laden
 	if "weapon" in enemyData:
 		load_slot(enemyWeaponIcon, enemyData["weapon"])
 	else:
@@ -113,77 +125,67 @@ func setupBattle(enemyData):
 	else:
 		clear_slot(enemyArmorIcon)
 		
-	# Startnachricht
 	logText("A wild [b]" + enemyName.text + "[/b] enters the arena!")
 
-# --- KAMPF LOGIK (RUNDENBASIERT) ---
+# --- KAMPF LOGIK (Unverändert) ---
 
 func _on_attack_button_pressed():
-	# Buttons sperren, damit Spieler nicht spammen kann
 	attackButton.disabled = true
 	surrenderButton.disabled = true
 	
-	# --- RUNDE 1: HELD GREIFT AN ---
-	var dmg = hero_damage # Hier später Random (z.B. randi_range(10, 15))
+	var dmg = hero_damage 
 	current_enemy_hp -= dmg
 	
-	# Visuelles Feedback
 	logText("You attack for [color=green]" + str(dmg) + " damage[/color]!")
 	animate_damage(enemyVisual)
 	update_health_bar(enemyHealthBar, current_enemy_hp)
 	
-	# Check: Gegner besiegt?
 	if current_enemy_hp <= 0:
 		win_battle()
-		return # Funktion beenden, Gegner ist tot
+		return 
 	
-	# Kurze Pause für Spannung (1 Sekunde)
 	await get_tree().create_timer(1.0).timeout
 	
-	# --- RUNDE 2: GEGNER GREIFT AN ---
 	logText("The " + enemyName.text + " prepares to strike...")
 	
-	# Pause für Reaktion
 	await get_tree().create_timer(1.0).timeout
 	
 	var received_dmg = enemy_damage
 	current_hero_hp -= received_dmg
 	
-	# Visuelles Feedback
 	logText("The enemy hits you for [color=red]" + str(received_dmg) + " damage[/color]!")
 	if heroVisual:
 		animate_damage(heroVisual)
 	update_health_bar(heroHealthBar, current_hero_hp)
 	
-	# Check: Held besiegt?
 	if current_hero_hp <= 0:
 		lose_battle("dead")
-		return # Funktion beenden
+		return 
 	
-	# --- ENDE DER RUNDE ---
-	# Buttons wieder freigeben
 	attackButton.disabled = false
 	surrenderButton.disabled = false
 
 func _on_surrender_button_pressed():
 	lose_battle("surrender")
 
-# --- GEWINNEN / VERLIEREN ---
+# --- GEWINNEN / VERLIEREN (Angepasst für Main UI) ---
 
 func win_battle():
 	logText("\n[b][color=yellow]VICTORY![/color][/b]")
 	logText("You stomp your enemy into the ground.")
 	
-	# Belohnung
 	var reward = GameManager.currentEnemy.get("reward_gold", 0)
 	GameManager.currentGold += reward
-	goldLabel.text = "Gold: " + str(GameManager.currentGold)
 	
-	# Navigation aktivieren
-	btnBack.disabled = false
-	btnBack.text = "Return to City like a king"
+	# UPDATE: Globales Gold Label aktualisieren
+	if main_gold_label:
+		main_gold_label.text = "Gold: " + str(GameManager.currentGold)
 	
-	# Kampf Buttons deaktiviert lassen
+	# UPDATE: Button einblenden und Text ändern
+	if main_back_btn:
+		main_back_btn.visible = true
+		main_back_btn.text = "Victory! Back to City"
+	
 	attackButton.disabled = true
 	surrenderButton.disabled = true
 
@@ -196,55 +198,41 @@ func lose_battle(reason):
 	if reason == "surrender":
 		logText("You threw in the towel and ran away.")
 	else:
-		logText("You are severely wounded and drag yourself out of the arena.")
-	
-	btnBack.disabled = false
-	btnBack.text = "Limp back to City"
+		logText("You are severely wounded.")
+		
+		# UPDATE: Button einblenden und Text ändern
+		if main_back_btn:
+			main_back_btn.visible = true
+			main_back_btn.text = "Run away..."
 
-# --- VISUALS & ANIMATIONS ---
+# --- VISUALS & ANIMATIONS (Unverändert) ---
 
 func update_health_bar(bar: ProgressBar, new_value: int):
-	# Erstellt eine flüssige Animation des Balkens
 	var tween = create_tween()
 	tween.tween_property(bar, "value", new_value, 0.4).set_trans(Tween.TRANS_SINE)
 
 func animate_damage(target_visual: Control):
 	if target_visual == null: return
-	
-	# 1. Rot aufblitzen
 	var color_tween = create_tween()
 	color_tween.tween_property(target_visual, "modulate", Color(1, 0.3, 0.3), 0.1)
 	color_tween.tween_property(target_visual, "modulate", Color.WHITE, 0.1)
-	
-	# 2. Wackeln (Shake)
 	var shake_tween = create_tween()
 	var original_pos = target_visual.position
-	var strength = 5.0 # Stärke in Pixeln
-	
+	var strength = 5.0 
 	shake_tween.tween_property(target_visual, "position:x", original_pos.x + strength, 0.05)
 	shake_tween.tween_property(target_visual, "position:x", original_pos.x - strength, 0.05)
 	shake_tween.tween_property(target_visual, "position:x", original_pos.x, 0.05)
 
 func logText(text: String):
-	# 1. Neue Nachricht ins Array packen
 	log_history.append(text)
-	
-	# 2. Prüfen, ob wir zu viele haben (Array.size() statt .length)
 	if log_history.size() > MAX_LOG_LINES:
-		log_history.pop_front() # Das älteste Element löschen (wie shift())
-	
-	# 3. Das Textfeld leeren und neu befüllen
+		log_history.pop_front() 
 	battleLog.clear()
-	
 	for line in log_history:
-		# Wir fügen jede Zeile aus dem Gedächtnis wieder ein
 		battleLog.append_text("\n" + line)
-
-# --- HELPER FUNCTIONS ---
 
 func load_slot(icon_node: TextureRect, path: String):
 	if icon_node == null: return
-	
 	if path and ResourceLoader.exists(path):
 		icon_node.texture = load(path)
 		icon_node.visible = true
@@ -255,16 +243,14 @@ func clear_slot(icon_node: TextureRect):
 	if icon_node:
 		icon_node.texture = null
 
+# --- BACK LOGIC ---
+
 func _on_btn_back_pressed():
-		# 1. Maus blockieren
-	if blackOverlay: blackOverlay.mouse_filter = Control.MOUSE_FILTER_STOP
-	
-	# 2. Fade Out (Schwarz werden) - SCHNELLER (0.4s)
-	var tween = create_tween()
-	if blackOverlay:
-		tween.tween_property(blackOverlay, "modulate:a", 1.0, 0.4)
-		await tween.finished
+	# WICHTIG: Stats speichern
 	GameManager.playerHp = current_hero_hp
-	# Wenn wir die Arena verlassen, wird es Nacht!
+	
+	# Nachtmodus aktivieren
 	GameManager.is_night = true
-	get_tree().change_scene_to_file("res://scenes/city_hub.tscn")
+	
+	# Zurück zur Stadt
+	GameManager.change_scene("res://scenes/city_hub.tscn")

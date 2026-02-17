@@ -39,29 +39,12 @@ layout_mode = 0
 offset_right = 1024.0
 offset_bottom = 600.0
 theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
+theme_override_constants/margin_top = 80
 theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
+theme_override_constants/margin_bottom = 80
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="BtnBack" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "← back to the city"
-
-[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="GoldLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Gold: 0"
 
 [node name="MainContent" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -95,18 +78,23 @@ size_flags_horizontal = 3
 theme_override_constants/separation = 5
 
 [node name="PreviewPanel (right)" type="Panel" parent="MarginContainer/VBoxContainer/MainContent"]
+custom_minimum_size = Vector2(0, 480)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.0
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/MainContent/PreviewPanel (right)"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -2.0
+offset_bottom = -22.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
 
 [node name="Preview Content" type="VBoxContainer" parent="MarginContainer/VBoxContainer/MainContent/PreviewPanel (right)/MarginContainer"]
 layout_mode = 2
@@ -162,11 +150,15 @@ scroll_active = false
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ButtonContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MainContent/PreviewPanel (right)/MarginContainer/Preview Content"]
+[node name="ButtonContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
+offset_left = 370.0
+offset_top = 492.0
+offset_right = 984.0
+offset_bottom = 536.0
 alignment = 2
 
-[node name="BtnFight" type="Button" parent="MarginContainer/VBoxContainer/MainContent/PreviewPanel (right)/MarginContainer/Preview Content/ButtonContainer"]
+[node name="BtnFight" type="Button" parent="ButtonContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
@@ -174,17 +166,4 @@ theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_gk2vu")
 text = "FIGHT 🗡️"
 
-[node name="BlackOverlay" type="ColorRect" parent="."]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 984.0
-offset_bottom = 560.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(0, 0, 0, 1)
-
-[connection signal="pressed" from="MarginContainer/VBoxContainer/MainContent/PreviewPanel (right)/MarginContainer/Preview Content/ButtonContainer/BtnFight" to="." method="_on_btn_fight_pressed"]
+[connection signal="pressed" from="ButtonContainer/BtnFight" to="." method="_on_btn_fight_pressed"]

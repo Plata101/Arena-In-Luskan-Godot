@@ -1,0 +1,90 @@
+[gd_scene load_steps=3 format=3 uid="uid://crk7xinkl7h2b"]
+
+[ext_resource type="Script" uid="uid://hec7pacjj5p6" path="res://scripts/main.gd" id="1_o5qli"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o5qli"]
+bg_color = Color(0, 0, 0, 0.392157)
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_o5qli")
+
+[node name="WorldContainer" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="UI_Layer" type="CanvasLayer" parent="."]
+
+[node name="TopBar" type="Panel" parent="UI_Layer"]
+custom_minimum_size = Vector2(1024, 50)
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 50.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_o5qli")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI_Layer/TopBar"]
+layout_mode = 1
+offset_right = 1024.0
+offset_bottom = 51.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI_Layer/TopBar/MarginContainer"]
+layout_mode = 2
+
+[node name="BtnBack" type="Button" parent="UI_Layer/TopBar/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Back to City"
+
+[node name="Spacer" type="Control" parent="UI_Layer/TopBar/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DayLabel" type="Label" parent="UI_Layer/TopBar/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Spacer2" type="Control" parent="UI_Layer/TopBar/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="GoldLabel" type="Label" parent="UI_Layer/TopBar/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Spacer3" type="Control" parent="UI_Layer/TopBar/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="BtnInventory" type="Button" parent="UI_Layer/TopBar/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Inventory"
+
+[node name="TransitionLayer" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="BlackOverlay" type="ColorRect" parent="TransitionLayer"]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)

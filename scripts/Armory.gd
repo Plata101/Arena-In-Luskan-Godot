@@ -1,7 +1,6 @@
 extends Control
 
 # UI Referenzen
-@onready var goldLabel = %GoldLabel
 @onready var gridContainer = %GridContainer
 @onready var inventoryGrid = %InventoryGrid
 @onready var blackOverlay = %BlackOverlay
@@ -30,16 +29,11 @@ var shopInventory = [
 ]
 
 func _ready():
-	# FADE IN
-	blackOverlay.modulate.a = 1.0 
-	var tween = create_tween()
-	tween.tween_property(blackOverlay, "modulate:a", 0.0, 0.4)
 	update_ui()
 	generate_shop_items()
 	update_inventory_view() # NEU: Initiales Laden des Inventars
 	
 func update_ui():
-	goldLabel.text = "Gold: " + str(GameManager.currentGold)
 	
 	# Alle items im Shop aktualisieren (Buttons disablen wenn zu teuer)
 	var allItems = gridContainer.get_children()
@@ -72,22 +66,8 @@ func update_inventory_view():
 	
 	# Größe merken, damit wir im _process wissen, wann sich was geändert hat
 	currentInventorySize = GameManager.inventory.size()
-		
-func _on_btn_back_pressed():
-		# 1. Maus blockieren
-	if blackOverlay: blackOverlay.mouse_filter = Control.MOUSE_FILTER_STOP
-	
-	# 2. Fade Out (Schwarz werden) - SCHNELLER (0.4s)
-	var tween = create_tween()
-	if blackOverlay:
-		tween.tween_property(blackOverlay, "modulate:a", 1.0, 0.4)
-		await tween.finished
-	get_tree().change_scene_to_file("res://scenes/city_hub.tscn")
-	
+			
 func _process(delta):
-	# Update Gold Anzeige
-	if goldLabel.text != "Gold: " + str(GameManager.currentGold):
-		update_ui()
 	
 	# NEU: Update Inventory Anzeige (wenn Items gekauft/verkauft wurden)
 	if GameManager.inventory.size() != currentInventorySize:
