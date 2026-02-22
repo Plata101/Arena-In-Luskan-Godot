@@ -1,0 +1,188 @@
+[gd_scene load_steps=2 format=3 uid="uid://8p1puqgc30ik"]
+
+[ext_resource type="Texture2D" uid="uid://dqldtypgjtpp" path="res://assets/sprites/hero.png" id="1_f7x35"]
+
+[node name="CharacterScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.8)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="LeftColumn" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HeroImage" type="TextureRect" parent="MarginContainer/HBoxContainer/LeftColumn"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+texture = ExtResource("1_f7x35")
+expand_mode = 4
+
+[node name="Spacer" type="Control" parent="MarginContainer/HBoxContainer/LeftColumn"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="StatusLabel" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn"]
+layout_mode = 2
+text = "Status"
+
+[node name="ReputationLabel" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn"]
+layout_mode = 2
+text = "Reputation"
+
+[node name="TrophiesContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/LeftColumn"]
+layout_mode = 2
+
+[node name="MiddleColumn" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VitalsGrid" type="GridContainer" parent="MarginContainer/HBoxContainer/MiddleColumn"]
+layout_mode = 2
+columns = 2
+
+[node name="HPLabel" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/VitalsGrid"]
+layout_mode = 2
+text = "Hitpoints:"
+
+[node name="HPBar" type="ProgressBar" parent="MarginContainer/HBoxContainer/MiddleColumn/VitalsGrid"]
+layout_mode = 2
+
+[node name="EnduranceLabel" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/VitalsGrid"]
+layout_mode = 2
+text = "Endurance:"
+
+[node name="EndBar" type="ProgressBar" parent="MarginContainer/HBoxContainer/MiddleColumn/VitalsGrid"]
+layout_mode = 2
+
+[node name="ActionsLabel" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/VitalsGrid"]
+layout_mode = 2
+text = "Actionpoints:"
+
+[node name="ActionsValue" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/VitalsGrid"]
+layout_mode = 2
+text = "2"
+
+[node name="ArmorLabel" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/VitalsGrid"]
+layout_mode = 2
+text = "Armorclass:"
+
+[node name="ArmorValue" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/VitalsGrid"]
+layout_mode = 2
+text = "10"
+
+[node name="Spacer" type="Control" parent="MarginContainer/HBoxContainer/MiddleColumn"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="StatsLabel" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn"]
+layout_mode = 2
+text = "Stats:"
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/HBoxContainer/MiddleColumn"]
+layout_mode = 2
+columns = 2
+
+[node name="StrLabel" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/GridContainer"]
+layout_mode = 2
+text = "Strength:"
+
+[node name="StrValue" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/GridContainer"]
+layout_mode = 2
+text = "5"
+
+[node name="StaLabel" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/GridContainer"]
+layout_mode = 2
+text = "Stamina:"
+
+[node name="StaValue" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/GridContainer"]
+layout_mode = 2
+text = "5"
+
+[node name="DexLabel" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/GridContainer"]
+layout_mode = 2
+text = "Dexterity:"
+
+[node name="DexValue" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/GridContainer"]
+layout_mode = 2
+text = "5"
+
+[node name="LuckLabel" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/GridContainer"]
+layout_mode = 2
+text = "Luck:"
+
+[node name="LuckValue" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/GridContainer"]
+layout_mode = 2
+text = "5"
+
+[node name="RightColumn" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Inventory" type="Label" parent="MarginContainer/HBoxContainer/RightColumn"]
+layout_mode = 2
+text = "Inventory:"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/HBoxContainer/RightColumn"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="InventoryList" type="VBoxContainer" parent="MarginContainer/HBoxContainer/RightColumn/ScrollContainer"]
+layout_mode = 2
+
+[node name="CatergoryWeapons" type="Label" parent="MarginContainer/HBoxContainer/RightColumn/ScrollContainer/InventoryList"]
+layout_mode = 2
+text = "Weapons & Amor"
+
+[node name="WeaponList" type="VBoxContainer" parent="MarginContainer/HBoxContainer/RightColumn/ScrollContainer/InventoryList"]
+layout_mode = 2
+
+[node name="CatergoryPotions" type="Label" parent="MarginContainer/HBoxContainer/RightColumn/ScrollContainer/InventoryList"]
+layout_mode = 2
+text = "Potions & Trinkets"
+
+[node name="PotionList" type="VBoxContainer" parent="MarginContainer/HBoxContainer/RightColumn/ScrollContainer/InventoryList"]
+layout_mode = 2
+
+[node name="CatergoryMisc" type="Label" parent="MarginContainer/HBoxContainer/RightColumn/ScrollContainer/InventoryList"]
+layout_mode = 2
+text = "Miscellaneous"
+
+[node name="MiscList" type="VBoxContainer" parent="MarginContainer/HBoxContainer/RightColumn/ScrollContainer/InventoryList"]
+layout_mode = 2
+
+[node name="BtnClose" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -17.0
+offset_bottom = 31.0
+grow_horizontal = 0
+text = "x"

@@ -26,6 +26,7 @@ stretch_mode = 6
 
 [node name="BtnSleep" type="Button" parent="."]
 unique_name_in_owner = true
+layout_mode = 0
 offset_left = 785.0
 offset_top = 67.0
 offset_right = 897.0
@@ -34,6 +35,7 @@ text = "Go to sleep "
 
 [node name="BtnEvents" type="Button" parent="."]
 unique_name_in_owner = true
+layout_mode = 0
 offset_left = 591.0
 offset_top = 158.0
 offset_right = 703.0
@@ -42,6 +44,7 @@ text = "Events"
 
 [node name="BtnFood" type="Button" parent="."]
 unique_name_in_owner = true
+layout_mode = 0
 offset_left = 191.0
 offset_top = 258.0
 offset_right = 303.0
@@ -50,6 +53,7 @@ text = "Eat & drink"
 
 [node name="BtnRumors" type="Button" parent="."]
 unique_name_in_owner = true
+layout_mode = 0
 offset_left = 390.0
 offset_top = 408.0
 offset_right = 502.0
