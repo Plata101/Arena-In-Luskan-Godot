@@ -152,5 +152,11 @@ func _on_btn_back_pressed():
 	change_scene("res://scenes/city_hub.tscn")
 
 func _on_btn_inventory_pressed():
-	print("Open Inventory...")
-	# change_scene("res://scenes/inventory_screen.tscn")
+	# 1. Szene laden
+	var inv_scene = load("res://scenes/character_screen.tscn") # <-- DEINEN PFAD PRÜFEN!
+	
+	# 2. Instanziieren
+	var inv_instance = inv_scene.instantiate()
+	
+	# 3. Zum UI_Layer hinzufügen (damit es ÜBER der World liegt, aber UNTER dem Fade-BlackOverlay)
+	$UI_Layer.add_child(inv_instance)

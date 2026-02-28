@@ -21,6 +21,20 @@ var playerMaxHp: int = 100
 var playerStrength: int = 5
 var playerArmor: int = 0
 
+# Neue Stats
+var playerStamina: int = 5
+var playerDexterity: int = 5
+var playerLuck: int = 5
+
+var playerEndurance: int = 100
+var playerMaxEndurance: int = 100
+var playerActionPoints: int = 2
+var playerArmorClass: int = 10 # Basis-Rüstung
+
+# Equipment Slots (Hier speichern wir die ausgerüsteten Dictionaries)
+var equipped_weapon = null
+var equipped_armor = null
+
 # Spiel-Status
 var currentDay: int = 1
 var maxDays: int = 100

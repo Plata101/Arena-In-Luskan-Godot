@@ -1,6 +1,23 @@
-[gd_scene load_steps=2 format=3 uid="uid://8p1puqgc30ik"]
+[gd_scene load_steps=19 format=3 uid="uid://8p1puqgc30ik"]
 
+[ext_resource type="Script" uid="uid://d3lv3cr444c0m" path="res://scripts/character_screen.gd" id="1_dpwwk"]
 [ext_resource type="Texture2D" uid="uid://dqldtypgjtpp" path="res://assets/sprites/hero.png" id="1_f7x35"]
+[ext_resource type="Texture2D" uid="uid://bfpvn057wkgds" path="res://assets/sprites/inventory-icons/icon_name.png" id="3_unpfo"]
+[ext_resource type="Texture2D" uid="uid://cm5saygsltovv" path="res://assets/sprites/inventory-icons/icon_law.png" id="4_2ufvw"]
+[ext_resource type="Texture2D" uid="uid://crn1i302wrvr7" path="res://assets/sprites/inventory-icons/icon_status.png" id="5_yxdyj"]
+[ext_resource type="Texture2D" uid="uid://dh2cyi8qt8oqa" path="res://assets/sprites/inventory-icons/icon_reputation.png" id="6_s36qh"]
+[ext_resource type="Texture2D" uid="uid://dpklm5np03qn1" path="res://assets/sprites/inventory-icons/gold.png" id="7_lojdb"]
+[ext_resource type="Texture2D" uid="uid://blcjj2bdhv2ex" path="res://assets/sprites/inventory-icons/icon_hitpoint.png" id="8_lojdb"]
+[ext_resource type="Texture2D" uid="uid://bdpwfcuu6ltco" path="res://assets/sprites/inventory-icons/icon_endurance.png" id="9_xtko8"]
+[ext_resource type="Texture2D" uid="uid://b01dnxo85m0oe" path="res://assets/sprites/inventory-icons/icon_actionpoints.png" id="10_nhggy"]
+[ext_resource type="Texture2D" uid="uid://dd0qgumemn5iy" path="res://assets/sprites/inventory-icons/icon_armorclass.png" id="11_ko3hd"]
+[ext_resource type="Texture2D" uid="uid://c75vhyb2ktlow" path="res://assets/sprites/inventory-icons/icon_strength.png" id="12_k7r8o"]
+[ext_resource type="Texture2D" uid="uid://msfwklot5l5c" path="res://assets/sprites/inventory-icons/icon_stamina.png" id="13_y8hwy"]
+[ext_resource type="Texture2D" uid="uid://bwsanjj5ya22n" path="res://assets/sprites/inventory-icons/icon_dexterity.png" id="14_qard0"]
+[ext_resource type="Texture2D" uid="uid://b575m6iuqeodo" path="res://assets/sprites/inventory-icons/icon_luck.png" id="15_7pq2g"]
+[ext_resource type="Texture2D" uid="uid://d1bvd7upkukhw" path="res://assets/sprites/inventory-icons/icon_weapon_armor.png" id="16_tqurt"]
+[ext_resource type="Texture2D" uid="uid://dbf4oa4w1mrgm" path="res://assets/sprites/inventory-icons/icon_potions.png" id="17_aaejt"]
+[ext_resource type="Texture2D" uid="uid://yaltdlvydfdt" path="res://assets/sprites/inventory-icons/icon_misc.png" id="18_dh0xa"]
 
 [node name="CharacterScreen" type="Control"]
 layout_mode = 3
@@ -9,6 +26,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_dpwwk")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -33,6 +51,7 @@ theme_override_constants/margin_bottom = 40
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 60
 
 [node name="LeftColumn" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
@@ -48,13 +67,91 @@ expand_mode = 4
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 
-[node name="StatusLabel" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn"]
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/HBoxContainer/LeftColumn"]
 layout_mode = 2
-text = "Status"
+theme_override_constants/h_separation = 20
+columns = 2
 
-[node name="ReputationLabel" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn"]
+[node name="Name" type="HBoxContainer" parent="MarginContainer/HBoxContainer/LeftColumn/GridContainer"]
 layout_mode = 2
-text = "Reputation"
+
+[node name="NameIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/LeftColumn/GridContainer/Name"]
+layout_mode = 2
+texture = ExtResource("3_unpfo")
+expand_mode = 2
+
+[node name="NameLabel" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn/GridContainer/Name"]
+layout_mode = 2
+text = "Name:"
+
+[node name="NameValue" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn/GridContainer"]
+layout_mode = 2
+text = "Garth von Galadon"
+
+[node name="Alignment" type="HBoxContainer" parent="MarginContainer/HBoxContainer/LeftColumn/GridContainer"]
+layout_mode = 2
+
+[node name="AlignmentIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/LeftColumn/GridContainer/Alignment"]
+layout_mode = 2
+texture = ExtResource("4_2ufvw")
+expand_mode = 2
+
+[node name="AlignmentLabel" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn/GridContainer/Alignment"]
+layout_mode = 2
+text = "Alignment:"
+
+[node name="AlignmentValue" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn/GridContainer"]
+layout_mode = 2
+text = "Good"
+
+[node name="Status" type="HBoxContainer" parent="MarginContainer/HBoxContainer/LeftColumn/GridContainer"]
+layout_mode = 2
+
+[node name="StatusIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/LeftColumn/GridContainer/Status"]
+layout_mode = 2
+texture = ExtResource("5_yxdyj")
+expand_mode = 2
+
+[node name="StatusLabel" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn/GridContainer/Status"]
+layout_mode = 2
+text = "Status:"
+
+[node name="StatusValue" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn/GridContainer"]
+layout_mode = 2
+text = "Beggar"
+
+[node name="Rep" type="HBoxContainer" parent="MarginContainer/HBoxContainer/LeftColumn/GridContainer"]
+layout_mode = 2
+
+[node name="RepIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/LeftColumn/GridContainer/Rep"]
+layout_mode = 2
+texture = ExtResource("6_s36qh")
+expand_mode = 2
+
+[node name="ReputationLabel" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn/GridContainer/Rep"]
+layout_mode = 2
+text = "Reputation:"
+
+[node name="ReputationValue" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn/GridContainer"]
+layout_mode = 2
+text = "Who are you again?"
+
+[node name="Gold" type="HBoxContainer" parent="MarginContainer/HBoxContainer/LeftColumn/GridContainer"]
+layout_mode = 2
+
+[node name="GoldIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/LeftColumn/GridContainer/Gold"]
+layout_mode = 2
+texture = ExtResource("7_lojdb")
+expand_mode = 2
+
+[node name="GoldLabel" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn/GridContainer/Gold"]
+layout_mode = 2
+text = "Gold:"
+
+[node name="GoldValueLabel" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
 
 [node name="TrophiesContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/LeftColumn"]
 layout_mode = 2
@@ -65,35 +162,72 @@ size_flags_horizontal = 3
 
 [node name="VitalsGrid" type="GridContainer" parent="MarginContainer/HBoxContainer/MiddleColumn"]
 layout_mode = 2
+theme_override_constants/h_separation = 20
 columns = 2
 
-[node name="HPLabel" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/VitalsGrid"]
+[node name="Hitpoints" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MiddleColumn/VitalsGrid"]
+layout_mode = 2
+
+[node name="HitpointsIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/MiddleColumn/VitalsGrid/Hitpoints"]
+layout_mode = 2
+texture = ExtResource("8_lojdb")
+expand_mode = 2
+
+[node name="HitpointsLabel" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/VitalsGrid/Hitpoints"]
 layout_mode = 2
 text = "Hitpoints:"
 
-[node name="HPBar" type="ProgressBar" parent="MarginContainer/HBoxContainer/MiddleColumn/VitalsGrid"]
+[node name="HpValueLabel" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/VitalsGrid"]
+unique_name_in_owner = true
 layout_mode = 2
 
-[node name="EnduranceLabel" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/VitalsGrid"]
+[node name="Endurance" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MiddleColumn/VitalsGrid"]
+layout_mode = 2
+
+[node name="EnduranceIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/MiddleColumn/VitalsGrid/Endurance"]
+layout_mode = 2
+texture = ExtResource("9_xtko8")
+expand_mode = 2
+
+[node name="EnduranceLabel" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/VitalsGrid/Endurance"]
 layout_mode = 2
 text = "Endurance:"
 
-[node name="EndBar" type="ProgressBar" parent="MarginContainer/HBoxContainer/MiddleColumn/VitalsGrid"]
+[node name="EnduranceValueLabel" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/VitalsGrid"]
+unique_name_in_owner = true
 layout_mode = 2
 
-[node name="ActionsLabel" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/VitalsGrid"]
+[node name="ActionPoints" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MiddleColumn/VitalsGrid"]
+layout_mode = 2
+
+[node name="ActionsPointsIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/MiddleColumn/VitalsGrid/ActionPoints"]
+layout_mode = 2
+texture = ExtResource("10_nhggy")
+expand_mode = 2
+
+[node name="ActionsLabel" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/VitalsGrid/ActionPoints"]
 layout_mode = 2
 text = "Actionpoints:"
 
-[node name="ActionsValue" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/VitalsGrid"]
+[node name="ActionPointsValueLabel" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/VitalsGrid"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "2"
 
-[node name="ArmorLabel" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/VitalsGrid"]
+[node name="ArmorClass" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MiddleColumn/VitalsGrid"]
+layout_mode = 2
+
+[node name="AcIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/MiddleColumn/VitalsGrid/ArmorClass"]
+layout_mode = 2
+texture = ExtResource("11_ko3hd")
+expand_mode = 2
+
+[node name="ArmorLabel" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/VitalsGrid/ArmorClass"]
 layout_mode = 2
 text = "Armorclass:"
 
-[node name="ArmorValue" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/VitalsGrid"]
+[node name="ArmorClassValueLabel" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/VitalsGrid"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "10"
 
@@ -107,37 +241,74 @@ text = "Stats:"
 
 [node name="GridContainer" type="GridContainer" parent="MarginContainer/HBoxContainer/MiddleColumn"]
 layout_mode = 2
+theme_override_constants/h_separation = 20
 columns = 2
 
-[node name="StrLabel" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/GridContainer"]
+[node name="Strength" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MiddleColumn/GridContainer"]
+layout_mode = 2
+
+[node name="StrIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/MiddleColumn/GridContainer/Strength"]
+layout_mode = 2
+texture = ExtResource("12_k7r8o")
+expand_mode = 2
+
+[node name="StrLabel" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/GridContainer/Strength"]
 layout_mode = 2
 text = "Strength:"
 
-[node name="StrValue" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/GridContainer"]
+[node name="StrengthValueLabel" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/GridContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "5"
 
-[node name="StaLabel" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/GridContainer"]
+[node name="Stamina" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MiddleColumn/GridContainer"]
+layout_mode = 2
+
+[node name="StaminaIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/MiddleColumn/GridContainer/Stamina"]
+layout_mode = 2
+texture = ExtResource("13_y8hwy")
+expand_mode = 2
+
+[node name="StaLabel" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/GridContainer/Stamina"]
 layout_mode = 2
 text = "Stamina:"
 
-[node name="StaValue" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/GridContainer"]
+[node name="StaminaValueLabel" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/GridContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "5"
 
-[node name="DexLabel" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/GridContainer"]
+[node name="Dex" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MiddleColumn/GridContainer"]
+layout_mode = 2
+
+[node name="DexIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/MiddleColumn/GridContainer/Dex"]
+layout_mode = 2
+texture = ExtResource("14_qard0")
+expand_mode = 2
+
+[node name="DexLabel" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/GridContainer/Dex"]
 layout_mode = 2
 text = "Dexterity:"
 
-[node name="DexValue" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/GridContainer"]
+[node name="DexterityValueLabel" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/GridContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "5"
 
-[node name="LuckLabel" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/GridContainer"]
+[node name="Luck" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MiddleColumn/GridContainer"]
+layout_mode = 2
+
+[node name="LuckIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/MiddleColumn/GridContainer/Luck"]
+layout_mode = 2
+texture = ExtResource("15_7pq2g")
+expand_mode = 2
+
+[node name="LuckLabel" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/GridContainer/Luck"]
 layout_mode = 2
 text = "Luck:"
 
-[node name="LuckValue" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/GridContainer"]
+[node name="LuckValueLabel" type="Label" parent="MarginContainer/HBoxContainer/MiddleColumn/GridContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "5"
 
@@ -149,6 +320,10 @@ size_flags_horizontal = 3
 layout_mode = 2
 text = "Inventory:"
 
+[node name="Spacer" type="Control" parent="MarginContainer/HBoxContainer/RightColumn"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
 [node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/HBoxContainer/RightColumn"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -156,21 +331,48 @@ size_flags_vertical = 3
 [node name="InventoryList" type="VBoxContainer" parent="MarginContainer/HBoxContainer/RightColumn/ScrollContainer"]
 layout_mode = 2
 
-[node name="CatergoryWeapons" type="Label" parent="MarginContainer/HBoxContainer/RightColumn/ScrollContainer/InventoryList"]
+[node name="WeaponsArmor" type="HBoxContainer" parent="MarginContainer/HBoxContainer/RightColumn/ScrollContainer/InventoryList"]
 layout_mode = 2
-text = "Weapons & Amor"
+
+[node name="WeaponsIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/RightColumn/ScrollContainer/InventoryList/WeaponsArmor"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+texture = ExtResource("16_tqurt")
+expand_mode = 2
+
+[node name="CatergoryWeapons" type="Label" parent="MarginContainer/HBoxContainer/RightColumn/ScrollContainer/InventoryList/WeaponsArmor"]
+layout_mode = 2
+text = "Weapons & Armor"
 
 [node name="WeaponList" type="VBoxContainer" parent="MarginContainer/HBoxContainer/RightColumn/ScrollContainer/InventoryList"]
 layout_mode = 2
 
-[node name="CatergoryPotions" type="Label" parent="MarginContainer/HBoxContainer/RightColumn/ScrollContainer/InventoryList"]
+[node name="Potions" type="HBoxContainer" parent="MarginContainer/HBoxContainer/RightColumn/ScrollContainer/InventoryList"]
+layout_mode = 2
+
+[node name="PotionsIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/RightColumn/ScrollContainer/InventoryList/Potions"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+texture = ExtResource("17_aaejt")
+expand_mode = 2
+
+[node name="CatergoryPotions" type="Label" parent="MarginContainer/HBoxContainer/RightColumn/ScrollContainer/InventoryList/Potions"]
 layout_mode = 2
 text = "Potions & Trinkets"
 
 [node name="PotionList" type="VBoxContainer" parent="MarginContainer/HBoxContainer/RightColumn/ScrollContainer/InventoryList"]
 layout_mode = 2
 
-[node name="CatergoryMisc" type="Label" parent="MarginContainer/HBoxContainer/RightColumn/ScrollContainer/InventoryList"]
+[node name="Misc" type="HBoxContainer" parent="MarginContainer/HBoxContainer/RightColumn/ScrollContainer/InventoryList"]
+layout_mode = 2
+
+[node name="MiscIcon" type="TextureRect" parent="MarginContainer/HBoxContainer/RightColumn/ScrollContainer/InventoryList/Misc"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+texture = ExtResource("18_dh0xa")
+expand_mode = 2
+
+[node name="CatergoryMisc" type="Label" parent="MarginContainer/HBoxContainer/RightColumn/ScrollContainer/InventoryList/Misc"]
 layout_mode = 2
 text = "Miscellaneous"
 
@@ -178,11 +380,14 @@ text = "Miscellaneous"
 layout_mode = 2
 
 [node name="BtnClose" type="Button" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -17.0
-offset_bottom = 31.0
+offset_left = -34.0
+offset_top = 10.0
+offset_right = -17.0
+offset_bottom = 41.0
 grow_horizontal = 0
 text = "x"
