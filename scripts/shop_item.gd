@@ -67,9 +67,6 @@ func buy_item():
 		# 1. Bezahlen
 		GameManager.currentGold -= itemData["price"]
 		
-		# 2. Stats dazu (Nutzt Hilfsfunktion unten)
-		modify_stats(itemData["type"], itemData["bonus"], true)
-		
 		# 3. WICHTIG: Item ins globale Inventar legen!
 		GameManager.inventory.append(itemData)
 		# 4. Update Gold Label
@@ -87,8 +84,6 @@ func sell_item():
 	var sellPrice = int(itemData["price"] * 0.6)
 	GameManager.currentGold += sellPrice
 	
-	# 2. Stats entfernen (false = abziehen)
-	modify_stats(itemData["type"], itemData["bonus"], false)
 	
 	# 3. Aus globalem Inventar löschen
 	# erase entfernt das erste Vorkommen dieses Daten-Objekts
@@ -102,15 +97,3 @@ func sell_item():
 	
 	# 4. Item aus der UI entfernen (Selbstzerstörung)
 	queue_free()
-
-# --- HILFSFUNKTION FÜR STATS (vermeidet Code-Doppelung) ---
-func modify_stats(type, amount, isAdding: bool):
-	# Wenn wir abziehen (Verkauf), drehen wir das Vorzeichen um
-	var finalAmount = amount if isAdding else -amount
-	
-	if type == "Strength":
-		GameManager.playerStrength += finalAmount
-	elif type == "Armor":
-		# Sicherstellen, dass die Variable im GameManager existiert
-		if "playerArmor" in GameManager:
-			GameManager.playerArmor += finalAmount

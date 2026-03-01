@@ -30,21 +30,52 @@ func _ready():
 	populate_inventory()
 
 func update_stats():
-	# Füllt die Labels mit den globalen Werten
-	# (Wir wandeln die Integers mit str() in Text um)
+	# 1. Basiswerte aus dem GameManager holen
+	var current_str = GameManager.playerStrength
+	var current_armor = GameManager.playerArmorClass
 	
+	# 2. Boni auslesen (falls etwas ausgerüstet ist)
+	var str_bonus = 0
+	if GameManager.equipped_weapon != null:
+		# Holt den Wert "bonus" aus dem Item-Dictionary (Standard ist 0, falls keiner existiert)
+		str_bonus = GameManager.equipped_weapon.get("bonus", 0)
+		
+	var armor_bonus = 0
+	if GameManager.equipped_armor != null:
+		armor_bonus = GameManager.equipped_armor.get("bonus", 0)
+		
+	# 3. Gesamtwerte berechnen
+	var total_str = current_str + str_bonus
+	var total_armor = current_armor + armor_bonus
+
+	# --- LABELS AKTUALISIEREN ---
+	
+	# Standard-Labels
 	hpLabel.text = str(GameManager.playerHp) + " / " + str(GameManager.playerMaxHp)
 	enduranceLabel.text = str(GameManager.playerEndurance) + " / " + str(GameManager.playerMaxEndurance)
 	apLabel.text = str(GameManager.playerActionPoints)
-	armorLabel.text = str(GameManager.playerArmorClass)
 	
-	strLabel.text = str(GameManager.playerStrength)
+	# Rüstungsklasse: Zeigt "14 (+4)" an, wenn eine Rüstung mit +4 ausgerüstet ist
+	if armor_bonus > 0:
+		armorLabel.text = str(total_armor) + " (+" + str(armor_bonus) + ")"
+		armorLabel.modulate = Color(0.5, 1.0, 0.5) # Mach den Text grünlich zur Belohnung
+	else:
+		armorLabel.text = str(total_armor)
+		armorLabel.modulate = Color.WHITE # Normale Farbe
+		
+	# Stärke: Analog zur Rüstung
+	if str_bonus > 0:
+		strLabel.text = str(total_str) + " (+" + str(str_bonus) + ")"
+		strLabel.modulate = Color(0.5, 1.0, 0.5) 
+	else:
+		strLabel.text = str(total_str)
+		strLabel.modulate = Color.WHITE
+
+	# Restliche Stats bleiben wie sie sind
 	staLabel.text = str(GameManager.playerStamina)
 	dexLabel.text = str(GameManager.playerDexterity)
 	luckLabel.text = str(GameManager.playerLuck)
 	
-	goldLabel.text = str(GameManager.currentGold)
-
 func populate_inventory():
 	# 1. Alte Listen leeren
 	for child in weaponsList.get_children(): child.queue_free()
@@ -141,6 +172,7 @@ func _on_item_action_pressed(item_data):
 	# UI neu laden, damit die Buttons (das grüne "E") aktualisiert werden
 	populate_inventory()
 	# Später fügen wir hier noch hinzu, dass sich deine Stats ändern!
+	update_stats()
 
 
 func _on_close_pressed():

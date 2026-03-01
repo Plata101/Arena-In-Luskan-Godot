@@ -73,9 +73,23 @@ func _ready():
 	attackButton.pressed.connect(_on_attack_button_pressed)
 	surrenderButton.pressed.connect(_on_surrender_button_pressed)
 	
-	# 3. Held Equipment laden
-	load_slot(heroWeaponIcon, "res://assets/sprites/morningstar.png")
-	load_slot(heroArmorIcon, "res://assets/sprites/scale.png")
+# 3. Held Equipment laden (Dynamisch aus dem GameManager)
+	
+	# WAFFE LADEN
+	if GameManager.equipped_weapon != null:
+		# Lade das Icon der ausgerüsteten Waffe
+		load_slot(heroWeaponIcon, GameManager.equipped_weapon["icon"])
+	else:
+		# Nichts ausgerüstet? Lade die Faust! (Achte auf den richtigen Pfad)
+		load_slot(heroWeaponIcon, "res://assets/sprites/fist.png") 
+		
+	# RÜSTUNG LADEN
+	if GameManager.equipped_armor != null:
+		# Lade das Icon der ausgerüsteten Rüstung
+		load_slot(heroArmorIcon, GameManager.equipped_armor["icon"])
+	else:
+		# Nichts ausgerüstet? Slot leeren! (oder ein Standard-Hemd laden)
+		load_slot(heroArmorIcon, "res://assets/sprites/no_armor.png") 
 	
 	# 4. Kampf vorbereiten
 	if GameManager.currentEnemy:
