@@ -30,6 +30,24 @@ var maxDays: int = 100
 
 # Inventory
 
+var shop_inventory: Array = [
+	# --- WAFFEN ---
+	{"name": "Dagger", "type": "Strength", "bonus": 1, "price": 5, "icon": "res://assets/sprites/dagger.png"},
+	{"name": "Shortsword", "type": "Strength", "bonus": 2, "price": 10, "icon": "res://assets/sprites/sword.png"},
+	{"name": "Axe", "type": "Strength", "bonus": 2, "price": 8, "icon": "res://assets/sprites/axe.png"},
+	{"name": "Pike", "type": "Strength", "bonus": 3, "price": 20, "icon": "res://assets/sprites/pike.png"},
+	{"name": "Morningstar", "type": "Strength", "bonus": 3, "price": 25, "icon": "res://assets/sprites/morningstar.png"},
+	
+	# --- ARMOR ---
+	{"name": "Cloth Doublet", "type": "Armor", "bonus": 1, "price": 15, "icon": "res://assets/sprites/studded.png"},
+	{"name": "Leather Armor", "type": "Armor", "bonus": 2, "price": 25, "icon": "res://assets/sprites/leather.png"},
+	{"name": "Chainmail", "type": "Armor", "bonus": 3, "price": 35, "icon": "res://assets/sprites/chain.png"},
+	{"name": "Scale Mail", "type": "Armor", "bonus": 4, "price": 50, "icon": "res://assets/sprites/scale.png"},
+	{"name": "Plate Armor", "type": "Armor", "bonus": 5, "price": 100, "icon": "res://assets/sprites/plate.png"},
+	{"name": "Plate Armor2", "type": "Armor", "bonus": 5, "price": 100, "icon": "res://assets/sprites/plate.png"}
+]
+
+# Player Inventory
 var inventory: Array = []
 
 var currentEnemy = {} # Hier speichern wir das ausgewählte Monster vor dem Szenenwechsel
@@ -37,6 +55,17 @@ var currentEnemy = {} # Hier speichern wir das ausgewählte Monster vor dem Szen
 # NEUE VARIABLEN FÜR DEN LOOP
 var current_day = 1
 var is_night = false
+
+
+func _ready():
+	# Sortiert den Shop direkt beim Start einmal durch
+	sort_inventories()
+
+func sort_inventories():
+	# Sortiert beide Arrays alphabetisch (A-Z) basierend auf dem "name"-Wert
+	shop_inventory.sort_custom(func(a, b): return a["name"] < b["name"])
+	inventory.sort_custom(func(a, b): return a["name"] < b["name"])
+
 
 # Neue Funktion für Szenenwechsel
 func change_scene(new_scene_path: String):

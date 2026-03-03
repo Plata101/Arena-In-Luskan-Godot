@@ -64,36 +64,40 @@ func _on_btn_buy_pressed():
 # --- LOGIK FÜR KAUFEN ---
 func buy_item():
 	if GameManager.currentGold >= itemData["price"]:
-		# 1. Bezahlen
 		GameManager.currentGold -= itemData["price"]
 		
-		# 3. WICHTIG: Item ins globale Inventar legen!
+		# 1. Aus dem Shop löschen
+		GameManager.shop_inventory.erase(itemData)
+		
+		# 2. Ins Spieler-Inventar legen
 		GameManager.inventory.append(itemData)
-		# 4. Update Gold Label
+		
+		# --- NEU: Listen direkt neu sortieren ---
+		GameManager.sort_inventories()
+		
 		if GameManager.main_node:
 			GameManager.main_node.update_ui()
-		
 		print("Purchased: ", itemData["name"])
-		
-		# UI Check triggern (via Armory update)
-		# Da wir keine Signale nutzen, warten wir auf den _process loop der Armory
 
-# --- LOGIK FÜR VERKAUFEN ---
 func sell_item():
-	# 1. Geld zurück (60%)
 	var sellPrice = int(itemData["price"] * 0.6)
 	GameManager.currentGold += sellPrice
 	
+	if GameManager.equipped_weapon == itemData:
+		GameManager.equipped_weapon = null
+	elif GameManager.equipped_armor == itemData:
+		GameManager.equipped_armor = null
 	
-	# 3. Aus globalem Inventar löschen
-	# erase entfernt das erste Vorkommen dieses Daten-Objekts
+	# 1. Aus dem Spieler-Inventar löschen
 	GameManager.inventory.erase(itemData)
 	
-	# 4. Update Gold Label
+	# 2. Zurück in den Shop legen
+	GameManager.shop_inventory.append(itemData)
+	
+	# --- NEU: Listen direkt neu sortieren ---
+	GameManager.sort_inventories()
+	
 	if GameManager.main_node:
 		GameManager.main_node.update_ui()
-	
 	print("Sold: ", itemData["name"])
-	
-	# 4. Item aus der UI entfernen (Selbstzerstörung)
 	queue_free()
