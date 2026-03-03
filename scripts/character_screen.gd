@@ -119,34 +119,46 @@ func populate_inventory():
 		
 		# C) Der Equip / Use Button
 		var btn = Button.new()
-		btn.custom_minimum_size = Vector2(80, 0) # Button etwas breiter
+		btn.custom_minimum_size = Vector2(80, 0)
+		var show_button = true # Schalter, ob wir überhaupt einen Button brauchen
 		
-		if GameManager.equipped_weapon == item or GameManager.equipped_armor == item:
-			btn.text = "E" 
-			btn.modulate = Color(0.5, 1.0, 0.5)
+		# Welcher Typ ist das Item?
+		var type = item.get("type", "")
+		
+		if type == "Strength" or type == "Armor" or type == "Trinket":
+			# Waffen & Rüstungen (Ausrüsten)
+			if GameManager.equipped_weapon == item or GameManager.equipped_armor == item or GameManager.equipped_trinket:
+				btn.text = "E" 
+				btn.modulate = Color(0.5, 1.0, 0.5)
+			else:
+				btn.text = "Equip"
+			btn.pressed.connect(_on_item_action_pressed.bind(item))
+			
+		elif type == "Potion":
+			# Tränke (Benutzen)
+			btn.text = "Use"
+			btn.modulate = Color(1.0, 0.7, 0.7) # Optional: Leicht rötlich für Heiltränke
+			btn.pressed.connect(_on_item_action_pressed.bind(item))
+			
 		else:
-			btn.text = "Equip"
+			# Misc-Items (Briefe etc. haben vorerst keinen Button)
+			show_button = false
 		
-		btn.pressed.connect(_on_item_action_pressed.bind(item))
-		
-		# D) Alles in die Zeile packen (Reihenfolge ist wichtig!)
+		# D) Alles in die Zeile packen
 		row.add_child(icon)
 		row.add_child(name_label)
-		# --- NEU 3: PADDING NACH RECHTS ---
-		# Optional: Wir können auch ein Control am Ende einfügen, 
-		# um Abstand zum Scrollbar-Rand zu halten.
+		
+		if show_button:
+			row.add_child(btn) # Button nur hinzufügen, wenn es kein Misc-Item ist
+			
 		var right_indent = Control.new()
 		right_indent.custom_minimum_size.x = 5 
-		
-		row.add_child(btn)
-		row.add_child(right_indent) # <--- Abstandhalter am Ende
+		row.add_child(right_indent)
 		
 		# E) Einsortieren (WICHTIG: Pfade prüfen!)
-		# Der Screenshot zeigt: Node heißt "WeaponList" (Einzahl).
-		var type = item.get("type", "")
 		if type == "Strength" or type == "Armor":
 			weaponsList.add_child(row) 
-		elif type == "Potion":
+		elif type == "Potion" or type == "Trinket":
 			potionsList.add_child(row)
 		else:
 			miscList.add_child(row)
@@ -156,7 +168,6 @@ func _on_item_action_pressed(item_data):
 	
 	# Waffe ausrüsten
 	if type == "Strength":
-		# Wenn es schon ausgerüstet ist, ziehen wir es wieder aus
 		if GameManager.equipped_weapon == item_data:
 			GameManager.equipped_weapon = null
 		else:
@@ -168,10 +179,29 @@ func _on_item_action_pressed(item_data):
 			GameManager.equipped_armor = null
 		else:
 			GameManager.equipped_armor = item_data
+			
+	# Schmuckstück ausrüsten (NEU)
+	elif type == "Trinket":
+		if GameManager.equipped_trinket == item_data:
+			GameManager.equipped_trinket = null
+		else:
+			GameManager.equipped_trinket = item_data
+			
+	# Trank benutzen (NEU)
+	elif type == "Potion":
+		# 1. Heilen
+		var heal_amount = item_data.get("bonus", 0)
+		GameManager.playerHp += heal_amount
+		
+		# 2. Nicht über Max-HP hinaus heilen
+		if GameManager.playerHp > GameManager.playerMaxHp:
+			GameManager.playerHp = GameManager.playerMaxHp
+			
+		# 3. Trank aus dem Inventar entfernen (ausgetrunken!)
+		GameManager.inventory.erase(item_data)
 	
-	# UI neu laden, damit die Buttons (das grüne "E") aktualisiert werden
+	# UI neu laden, damit die Buttons, Items und Werte aktualisiert werden
 	populate_inventory()
-	# Später fügen wir hier noch hinzu, dass sich deine Stats ändern!
 	update_stats()
 
 

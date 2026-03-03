@@ -23,6 +23,7 @@ var playerArmorClass: int = 10 # Basis-Rüstung
 # Equipment Slots (Hier speichern wir die ausgerüsteten Dictionaries)
 var equipped_weapon = null
 var equipped_armor = null
+var equipped_trinket = null
 
 # Spiel-Status
 var currentDay: int = 1
@@ -48,7 +49,11 @@ var shop_inventory: Array = [
 ]
 
 # Player Inventory
-var inventory: Array = []
+var inventory: Array = [
+	{"name": "Healing Potion", "type": "Potion", "bonus": 20, "price": 100, "icon": "res://assets/sprites/potion_blue.png"},
+	{"name": "Mysterious Ring", "type": "Trinket", "bonus": 0, "price": 100, "icon": "res://assets/sprites/ring_ruby.png"},
+	{"name": "Letter", "type": "Misc", "bonus": 0, "price": 0, "icon": "res://assets/sprites/scroll.png"},
+]
 
 var currentEnemy = {} # Hier speichern wir das ausgewählte Monster vor dem Szenenwechsel
 
