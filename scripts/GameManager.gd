@@ -51,7 +51,7 @@ var shop_inventory: Array = [
 # Player Inventory
 var inventory: Array = [
 	{"name": "Healing Potion", "type": "Potion", "bonus": 20, "price": 100, "icon": "res://assets/sprites/potion_blue.png"},
-	{"name": "Mysterious Ring", "type": "Trinket", "bonus": 0, "price": 100, "icon": "res://assets/sprites/ring_ruby.png"},
+	{"name": "Mysterious Ring", "type": "Trinket", "bonus": 2, "price": 100, "icon": "res://assets/sprites/ring_ruby.png"},
 	{"name": "Letter", "type": "Misc", "bonus": 0, "price": 0, "icon": "res://assets/sprites/scroll.png"},
 ]
 

@@ -1,0 +1,83 @@
+[gd_scene load_steps=5 format=3 uid="uid://dygdeewqidsx2"]
+
+[ext_resource type="Script" uid="uid://bkhv1aawbip3m" path="res://scripts/dialogue_overlay.gd" id="1_dh0qe"]
+[ext_resource type="Texture2D" uid="uid://co38sxkqv34ry" path="res://assets/sprites/npcs/npc_thorfin_bar.png" id="1_t5kwb"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_dh0qe"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_0pfuj"]
+
+[node name="DialogueOverlay" type="CanvasLayer"]
+script = ExtResource("1_dh0qe")
+
+[node name="BackgroundDarkener" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.705882)
+
+[node name="ModalBox" type="PanelContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -179.5
+offset_right = 300.0
+offset_bottom = 179.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ModalBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="MainColumn" type="VBoxContainer" parent="ModalBox/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="NpcPortrait" type="TextureRect" parent="ModalBox/MarginContainer/MainColumn"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+texture = ExtResource("1_t5kwb")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="NpcName" type="Label" parent="ModalBox/MarginContainer/MainColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Thorfin"
+label_settings = SubResource("LabelSettings_dh0qe")
+horizontal_alignment = 1
+
+[node name="NpcProfession" type="Label" parent="ModalBox/MarginContainer/MainColumn"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Sailor"
+label_settings = SubResource("LabelSettings_0pfuj")
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="ModalBox/MarginContainer/MainColumn"]
+layout_mode = 2
+
+[node name="DialogueText" type="RichTextLabel" parent="ModalBox/MarginContainer/MainColumn"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+bbcode_enabled = true
+text = "Well met, how about another round of beer to start the conversation?"
+fit_content = true
+
+[node name="HSeparator2" type="HSeparator" parent="ModalBox/MarginContainer/MainColumn"]
+layout_mode = 2
+
+[node name="ChoicesContainer" type="VBoxContainer" parent="ModalBox/MarginContainer/MainColumn"]
+unique_name_in_owner = true
+layout_mode = 2

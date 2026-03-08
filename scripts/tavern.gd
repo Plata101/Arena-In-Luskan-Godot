@@ -15,11 +15,43 @@ extends Control
 var img_day = preload("res://assets/sprites/tavern-day-bg.jpg")
 var img_night = preload("res://assets/sprites/tavern-night-bg.jpg")
 
+var dialogue_scene = preload("res://scenes/dialogue_overlay.tscn")
+
+# --- UNSER TEXT-PAKET FÜR THORFIN ---
+var thorfin_dialogue = {
+	"start": {
+		"text": "Well met, stranger. What brings you to this gloomy place?",
+		"choices": [
+			{"text": "Well met too, what news on the riddermark?", "next_node": "news"},
+			{"text": "Howdy, I see you already had 5 glasses of beer.", "next_node": "drunk"},
+			{"text": "Just passing through. (Leave)", "next_node": "end"}
+		]
+	},
+	"news": {
+		"text": "The orks are gathering in the mountains. Dark times are ahead of us.",
+		"choices": [
+			{"text": "I will slay them all! (Good Alignment)", "next_node": "end"},
+			{"text": "Not my problem. (Leave)", "next_node": "end"}
+		]
+	},
+	"drunk": {
+		"text": "Mind your own business, you scoundrel! *hiccup*",
+		"choices": [
+			{"text": "Sorry, my bad. (Leave)", "next_node": "end"}
+		]
+	}
+}
+
+
+
 func _ready():
 	# WICHTIG: Achte darauf, dass das Signal korrekt verbunden ist
 	# (manchmal doppelt man das, wenn man es auch im Editor verbunden hat)
 	if not btnSleep.pressed.is_connected(_on_btn_sleep_pressed):
 		btnSleep.pressed.connect(_on_btn_sleep_pressed)
+		
+	if btnRumors:
+		btnRumors.pressed.connect(_on_rumors_pressed)
 	
 	# Start-Check: Wir rufen direkt die neue Funktion auf
 	update_ui()
@@ -49,6 +81,24 @@ func setup_day_mode():
 	
 
 # --- ACTIONS ---
+
+func _on_rumors_pressed():
+	# Erschaffe eine Kopie (Instanz) des Dialog-Overlays
+	var dialogue_instance = dialogue_scene.instantiate()
+	
+		# Danach fügen wir es der Szene hinzu (der Fade-In startet automatisch!)
+	add_child(dialogue_instance)
+# --- HIER PASSIERT DIE MAGIE ---
+	# Wir rufen setup_dialogue auf und geben ihm alle Infos:
+	# Name, Beruf, Pfad zum Bild, und das Dictionary mit dem Text
+	dialogue_instance.setup_dialogue(
+		"Thorfin", 
+		"Sailor", 
+		"res://assets/sprites/thorfin.png", # WICHTIG: Ersetze das mit deinem echten Pfad zum Thorfin-Bild!
+		thorfin_dialogue
+	)
+	
+
 
 func _on_btn_sleep_pressed():
 	# 1. Gold prüfen und abziehen

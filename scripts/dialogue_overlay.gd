@@ -1,0 +1,79 @@
+extends CanvasLayer
+
+# --- REFERENZEN ---
+@onready var npcPortrait = %NpcPortrait
+@onready var npcName = %NpcName
+@onready var npcProfession = %NpcProfession
+@onready var dialogueText = %DialogueText
+@onready var choicesContainer = %ChoicesContainer
+@onready var btnClose = %BtnClose
+
+# Leeres Dictionary, wird später von der Taverne gefüllt!
+var current_dialogue = {}
+
+func _ready():
+	# --- FADE IN EFFEKT ---
+	# Wir machen das gesamte Overlay unsichtbar (Alpha = 0)
+	# Wichtig: Falls du CanvasLayer nutzt, greifen wir auf das erste Kind zu (den BackgroundDarkener oder ModalBox)
+	# Noch einfacher: Wir ändern einfach den modulate-Wert des CanvasLayers (wenn Godot Version das zulässt)
+	# Alternativ (sicherer): Packe BackgroundDarkener + ModalBox in einen Control-Node (%MainRoot) 
+	# oder wir faden die Nodes einzeln:
+	
+	# Damit wir alle Kinder faden können, machen wir es so:
+	for child in get_children():
+		if child is CanvasItem:
+			child.modulate.a = 0.0
+			var tween = create_tween()
+			tween.tween_property(child, "modulate:a", 1.0, 0.3) # 0.3 Sekunden Fade-In
+
+	# Close Button
+	if btnClose:
+		btnClose.pressed.connect(close_dialogue)
+
+# --- NEU: Das System, um den Dialog von außen zu füttern ---
+func setup_dialogue(npc_name_text: String, npc_prof_text: String, npc_image_path: String, dialogue_dict: Dictionary):
+	npcName.text = npc_name_text
+	npcProfession.text = npc_prof_text
+	
+	if ResourceLoader.exists(npc_image_path):
+		npcPortrait.texture = load(npc_image_path)
+		
+	current_dialogue = dialogue_dict
+	
+	# Starte das Gespräch beim Knoten "start"
+	load_dialogue_node("start")
+
+func load_dialogue_node(node_id: String):
+	if node_id == "end":
+		close_dialogue()
+		return
+		
+	if not current_dialogue.has(node_id):
+		return
+		
+	var node_data = current_dialogue[node_id]
+	dialogueText.text = "[color=yellow][i]" + node_data["text"] + "[/i][/color]"
+	
+	for child in choicesContainer.get_children():
+		child.queue_free()
+		
+	for choice in node_data["choices"]:
+		var btn = Button.new()
+		btn.text = choice["text"]
+		btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		btn.pressed.connect(_on_choice_pressed.bind(choice["next_node"]))
+		choicesContainer.add_child(btn)
+
+func _on_choice_pressed(next_node_id: String):
+	load_dialogue_node(next_node_id)
+
+func close_dialogue():
+	# --- FADE OUT EFFEKT ---
+	var tween = create_tween()
+	# Wir animieren alle Kinder wieder auf Alpha 0
+	for child in get_children():
+		if child is CanvasItem:
+			tween.parallel().tween_property(child, "modulate:a", 0.0, 0.2) # 0.2 Sekunden ausblenden
+	
+	# Wenn die Animation fertig ist, löschen wir das Fenster
+	tween.tween_callback(queue_free)

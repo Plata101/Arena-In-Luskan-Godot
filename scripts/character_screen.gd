@@ -33,6 +33,7 @@ func update_stats():
 	# 1. Basiswerte aus dem GameManager holen
 	var current_str = GameManager.playerStrength
 	var current_armor = GameManager.playerArmorClass
+	var current_luck = GameManager.playerLuck
 	
 	# 2. Boni auslesen (falls etwas ausgerüstet ist)
 	var str_bonus = 0
@@ -43,10 +44,16 @@ func update_stats():
 	var armor_bonus = 0
 	if GameManager.equipped_armor != null:
 		armor_bonus = GameManager.equipped_armor.get("bonus", 0)
+	
+	var luck_bonus = 0
+	if GameManager.equipped_trinket != null:
+		# Wir gehen davon aus, dass der Ring aktuell nur Luck gibt
+		luck_bonus = GameManager.equipped_trinket.get("bonus", 0)
 		
 	# 3. Gesamtwerte berechnen
 	var total_str = current_str + str_bonus
 	var total_armor = current_armor + armor_bonus
+	var total_luck = current_luck + luck_bonus
 
 	# --- LABELS AKTUALISIEREN ---
 	
@@ -70,11 +77,18 @@ func update_stats():
 	else:
 		strLabel.text = str(total_str)
 		strLabel.modulate = Color.WHITE
+		
+	if luck_bonus > 0:
+		luckLabel.text = str(total_luck) + " (+" + str(luck_bonus) + ")"
+		luckLabel.modulate = Color(0.5, 1.0, 0.5) 
+	else:
+		luckLabel.text = str(total_luck)
+		luckLabel.modulate = Color.WHITE
 
 	# Restliche Stats bleiben wie sie sind
 	staLabel.text = str(GameManager.playerStamina)
 	dexLabel.text = str(GameManager.playerDexterity)
-	luckLabel.text = str(GameManager.playerLuck)
+
 	
 func populate_inventory():
 	# 1. Alte Listen leeren
