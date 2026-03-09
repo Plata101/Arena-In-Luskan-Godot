@@ -35,6 +35,8 @@ func update_stats():
 	var current_armor = GameManager.playerArmorClass
 	var current_luck = GameManager.playerLuck
 	
+	goldLabel.text = str(GameManager.currentGold)
+	
 	# 2. Boni auslesen (falls etwas ausgerüstet ist)
 	var str_bonus = 0
 	if GameManager.equipped_weapon != null:

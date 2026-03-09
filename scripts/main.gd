@@ -28,6 +28,8 @@ func _ready():
 	btn_back.pressed.connect(_on_btn_back_pressed)
 	btn_inventory.pressed.connect(_on_btn_inventory_pressed)
 	
+	# Btn Back zuerst nicht sichtbar weil wir in der Stadt starten
+	btn_back.visible = false
 	# Startszene laden (ohne Fade beim allerersten Start, oder mit - wie du magst)
 	# Hier rufen wir direkt die interne Logik auf, damit es sofort da ist
 	_switch_scene_content(start_scene_path)

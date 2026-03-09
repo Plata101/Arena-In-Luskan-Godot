@@ -5,7 +5,7 @@ extends Control
 
 # Buttons (Frei platziert)
 @onready var btnBack = %BtnBack
-@onready var btnFood = %BtnFood
+@onready var btnBartender = %BtnBartender
 @onready var btnEvents = %BtnEvents
 @onready var btnRumors = %BtnRumors
 @onready var btnSleep = %BtnSleep
@@ -42,6 +42,22 @@ var thorfin_dialogue = {
 	}
 }
 
+# --- NEU: DIALOG 2: BARKEEPER ---
+var bartender_dialogue = {
+	"start": {
+		"text": "Welcome to the Dragon's Tankard! Best ale in all of Luskan. What can I get ya?",
+		"choices": [
+			{"text": "A pint of your finest ale, please.", "next_node": "ale"},
+			{"text": "Just looking around. (Leave)", "next_node": "end"}
+		]
+	},
+	"ale": {
+		"text": "Here you go! Drink up, it puts hair on your chest.",
+		"choices": [
+			{"text": "Thanks! (Leave)", "next_node": "end"}
+		]
+	}
+}
 
 
 func _ready():
@@ -52,6 +68,9 @@ func _ready():
 		
 	if btnRumors:
 		btnRumors.pressed.connect(_on_rumors_pressed)
+		
+	if btnBartender:
+		btnBartender.pressed.connect(_on_bartender_pressed)
 	
 	# Start-Check: Wir rufen direkt die neue Funktion auf
 	update_ui()
@@ -94,8 +113,20 @@ func _on_rumors_pressed():
 	dialogue_instance.setup_dialogue(
 		"Thorfin", 
 		"Sailor", 
-		"res://assets/sprites/thorfin.png", # WICHTIG: Ersetze das mit deinem echten Pfad zum Thorfin-Bild!
+		"res://assets/sprites/npcs/thorfin.png", # WICHTIG: Ersetze das mit deinem echten Pfad zum Thorfin-Bild!
 		thorfin_dialogue
+	)
+	
+func _on_bartender_pressed():
+	var dialogue_instance = dialogue_scene.instantiate()
+	add_child(dialogue_instance) # Gleiches Overlay laden!
+	
+	# Aber diesmal übergeben wir dem Overlay GANZ ANDERE DATEN:
+	dialogue_instance.setup_dialogue(
+		"Tomas M. Agnum", # Anderer Name
+		"Innkeeper", # Anderer Beruf
+		"res://assets/sprites/npcs/npc_tomas_inkeeper.png", # WICHTIG: Pfad zu deinem Barkeeper-Bild anpassen!
+		bartender_dialogue # Anderes Text-Paket
 	)
 	
 
