@@ -52,20 +52,36 @@ func load_dialogue_node(node_id: String):
 		return
 		
 	var node_data = current_dialogue[node_id]
-	dialogueText.text = "[color=yellow][i]" + node_data["text"] + "[/i][/color]"
+	var raw_text = node_data["text"]
+	if raw_text is Callable:
+		# Wenn es eine Funktion ist, rufen wir sie auf, um den Text zu bekommen!
+		dialogueText.text = "[color=yellow][i]" + raw_text.call() + "[/i][/color]"
+	else:
+		# Wenn es ein normaler Text (String) ist, zeigen wir ihn einfach an
+		dialogueText.text = "[color=yellow][i]" + str(raw_text) + "[/i][/color]"
 	
 	for child in choicesContainer.get_children():
 		child.queue_free()
 		
 	for choice in node_data["choices"]:
+		if choice.has("condition"):
+			var cond_func = choice["condition"]
+			if cond_func.call() == false:
+				continue # Überspringt das Erstellen des Buttons
 		var btn = Button.new()
 		btn.text = choice["text"]
 		btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		btn.pressed.connect(_on_choice_pressed.bind(choice["next_node"]))
+		btn.pressed.connect(_on_choice_pressed.bind(choice))
 		choicesContainer.add_child(btn)
 
-func _on_choice_pressed(next_node_id: String):
-	load_dialogue_node(next_node_id)
+func _on_choice_pressed(choice_data: Dictionary):
+	# --- NEU: EFFEKT AUSFÜHREN ---
+	if choice_data.has("effect"):
+		var effect_func = choice_data["effect"]
+		effect_func.call() # Führt den Code aus, der in "effect" steht!
+		
+	# Lade den nächsten Knoten
+	load_dialogue_node(choice_data["next_node"])
 
 func close_dialogue():
 	# --- FADE OUT EFFEKT ---

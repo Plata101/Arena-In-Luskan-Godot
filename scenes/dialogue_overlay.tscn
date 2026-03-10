@@ -19,17 +19,14 @@ grow_vertical = 2
 color = Color(0, 0, 0, 0.705882)
 
 [node name="ModalBox" type="PanelContainer" parent="."]
-anchors_preset = 8
+anchors_preset = 5
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
 offset_left = -300.0
-offset_top = -179.5
+offset_top = 60.0
 offset_right = 300.0
-offset_bottom = 179.5
+offset_bottom = 437.0
 grow_horizontal = 2
-grow_vertical = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="ModalBox"]
 layout_mode = 2
@@ -46,6 +43,7 @@ theme_override_constants/separation = 10
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
+size_flags_vertical = 4
 texture = ExtResource("1_t5kwb")
 expand_mode = 3
 stretch_mode = 5

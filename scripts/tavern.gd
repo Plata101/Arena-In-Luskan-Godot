@@ -17,49 +17,6 @@ var img_night = preload("res://assets/sprites/tavern-night-bg.jpg")
 
 var dialogue_scene = preload("res://scenes/dialogue_overlay.tscn")
 
-# --- UNSER TEXT-PAKET FÜR THORFIN ---
-var thorfin_dialogue = {
-	"start": {
-		"text": "Well met, stranger. What brings you to this gloomy place?",
-		"choices": [
-			{"text": "Well met too, what news on the riddermark?", "next_node": "news"},
-			{"text": "Howdy, I see you already had 5 glasses of beer.", "next_node": "drunk"},
-			{"text": "Just passing through. (Leave)", "next_node": "end"}
-		]
-	},
-	"news": {
-		"text": "The orks are gathering in the mountains. Dark times are ahead of us.",
-		"choices": [
-			{"text": "I will slay them all! (Good Alignment)", "next_node": "end"},
-			{"text": "Not my problem. (Leave)", "next_node": "end"}
-		]
-	},
-	"drunk": {
-		"text": "Mind your own business, you scoundrel! *hiccup*",
-		"choices": [
-			{"text": "Sorry, my bad. (Leave)", "next_node": "end"}
-		]
-	}
-}
-
-# --- NEU: DIALOG 2: BARKEEPER ---
-var bartender_dialogue = {
-	"start": {
-		"text": "Welcome to the Dragon's Tankard! Best ale in all of Luskan. What can I get ya?",
-		"choices": [
-			{"text": "A pint of your finest ale, please.", "next_node": "ale"},
-			{"text": "Just looking around. (Leave)", "next_node": "end"}
-		]
-	},
-	"ale": {
-		"text": "Here you go! Drink up, it puts hair on your chest.",
-		"choices": [
-			{"text": "Thanks! (Leave)", "next_node": "end"}
-		]
-	}
-}
-
-
 func _ready():
 	# WICHTIG: Achte darauf, dass das Signal korrekt verbunden ist
 	# (manchmal doppelt man das, wenn man es auch im Editor verbunden hat)
@@ -114,7 +71,7 @@ func _on_rumors_pressed():
 		"Thorfin", 
 		"Sailor", 
 		"res://assets/sprites/npcs/thorfin.png", # WICHTIG: Ersetze das mit deinem echten Pfad zum Thorfin-Bild!
-		thorfin_dialogue
+		Dialogues.thorfin
 	)
 	
 func _on_bartender_pressed():
@@ -126,7 +83,7 @@ func _on_bartender_pressed():
 		"Tomas M. Agnum", # Anderer Name
 		"Innkeeper", # Anderer Beruf
 		"res://assets/sprites/npcs/npc_tomas_inkeeper.png", # WICHTIG: Pfad zu deinem Barkeeper-Bild anpassen!
-		bartender_dialogue # Anderes Text-Paket
+		Dialogues.inkeeper # Anderes Text-Paket
 	)
 	
 
@@ -136,10 +93,12 @@ func _on_btn_sleep_pressed():
 	if GameManager.currentGold >= 10:
 		GameManager.currentGold -= 10
 		
-		# WICHTIG: Hier NUR den Effekt starten. 
-		# Keine Variablen wie "is_night" ändern! Das macht das Main-Script für uns.
-		if GameManager.main_node:
-			GameManager.main_node.play_sleep_effect()
+	GameManager.beers_drank_today = 0
+		
+	# WICHTIG: Hier NUR den Effekt starten. 
+	# Keine Variablen wie "is_night" ändern! Das macht das Main-Script für uns.
+	if GameManager.main_node:
+		GameManager.main_node.play_sleep_effect()
 			
 	else:
 		print("Nicht genug Gold!")

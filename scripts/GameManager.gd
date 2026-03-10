@@ -28,6 +28,7 @@ var equipped_trinket = null
 # Spiel-Status
 var currentDay: int = 1
 var maxDays: int = 100
+var beers_drank_today: int = 0
 
 # Inventory
 
