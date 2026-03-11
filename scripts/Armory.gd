@@ -39,9 +39,13 @@ func update_inventory_view():
 		child.queue_free()
 	
 	for itemData in GameManager.inventory:
-		var newItem = shopItemScene.instantiate()
-		inventoryGrid.add_child(newItem)
-		newItem.set_item_data(itemData, true) 
+		# --- NEU: Der Filter! ---
+		var type = itemData.get("type", "")
+		# Wir zeigen das Item NUR an, wenn es Waffe oder Rüstung ist
+		if type == "Strength" or type == "Armor":
+			var newItem = shopItemScene.instantiate()
+			inventoryGrid.add_child(newItem)
+			newItem.set_item_data(itemData, true) 
 	
 	currentInventorySize = GameManager.inventory.size()
 			

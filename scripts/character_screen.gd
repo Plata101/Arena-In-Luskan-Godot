@@ -143,7 +143,7 @@ func populate_inventory():
 		
 		if type == "Strength" or type == "Armor" or type == "Trinket":
 			# Waffen & Rüstungen (Ausrüsten)
-			if GameManager.equipped_weapon == item or GameManager.equipped_armor == item or GameManager.equipped_trinket:
+			if GameManager.equipped_weapon == item or GameManager.equipped_armor == item or GameManager.equipped_trinket == item:
 				btn.text = "E" 
 				btn.modulate = Color(0.5, 1.0, 0.5)
 			else:
