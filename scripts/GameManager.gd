@@ -33,8 +33,12 @@ var beers_drank_today: int = 0
 # Sammelt alle Events des aktuellen Tages
 var daily_events: Array[Dictionary] = []
 
+# --- SHOP SYSTEM ---
+var current_shop_type: String = "Armory" # Merkt sich, wo wir sind
 # Inventory
-var shop_inventory: Array = [
+
+# 1. Das echte Inventar des Schmieds
+var armory_inventory: Array[Dictionary] = [
 	# --- WAFFEN ---
 	{"name": "Dagger", "type": "Strength", "bonus": 1, "price": 5, "icon": "res://assets/sprites/items/dagger.png"},
 	{"name": "Shortsword", "type": "Strength", "bonus": 2, "price": 10, "icon": "res://assets/sprites/items/sword.png"},
@@ -50,6 +54,15 @@ var shop_inventory: Array = [
 	{"name": "Plate Armor", "type": "Armor", "bonus": 5, "price": 100, "icon": "res://assets/sprites/items/plate.png"},
 	{"name": "Plate Armor2", "type": "Armor", "bonus": 5, "price": 100, "icon": "res://assets/sprites/items/plate.png"}
 ]
+
+# 2. Das echte Inventar des Alchemisten / Gemischtwarenhändlers
+var potions_inventory: Array[Dictionary] = [
+	{"name": "Healing Potion", "type": "Potion", "bonus": 20, "price": 100, "icon": "res://assets/sprites/items/potion_blue.png"},
+	{"name": "Mysterious Ring", "type": "Trinket", "bonus": 2, "price": 100, "icon": "res://assets/sprites/items/ring_ruby.png"},
+]
+
+# 3. Der "Zeiger" für die Shop-Szene (bleibt am Anfang leer!)
+var shop_inventory: Array[Dictionary] = []
 
 # Player Inventory
 var inventory: Array = [
@@ -70,10 +83,10 @@ func _ready():
 	sort_inventories()
 
 func sort_inventories():
-	# Sortiert beide Arrays alphabetisch (A-Z) basierend auf dem "name"-Wert
-	shop_inventory.sort_custom(func(a, b): return a["name"] < b["name"])
+	# Sortiert alle Arrays alphabetisch (A-Z) basierend auf dem "name"-Wert
+	armory_inventory.sort_custom(func(a, b): return a["name"] < b["name"])
+	potions_inventory.sort_custom(func(a, b): return a["name"] < b["name"])
 	inventory.sort_custom(func(a, b): return a["name"] < b["name"])
-
 
 # Neue Funktion für Szenenwechsel
 func change_scene(new_scene_path: String):

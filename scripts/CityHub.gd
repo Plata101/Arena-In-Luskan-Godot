@@ -46,12 +46,22 @@ func setup_night():
 	
 # Diese Funktionen erstellen wir gleich über Signale
 func _on_btn_shop_pressed():
-	get_tree().change_scene_to_file("res://scenes/shop.tscn")
+	# 1. Shop-Typ setzen
+	GameManager.current_shop_type = "Potions"
 	
+	# 2. Die Tränke in den Verkaufsraum legen!
+	GameManager.shop_inventory = GameManager.potions_inventory
+	GameManager.change_scene("res://scenes/universal_shop.tscn")
 	
 func _on_btn_armory_pressed():
+	# 1. Shop-Typ setzen (für Hintergrundbild und Inventar-Filter)
+	GameManager.current_shop_type = "Armory"
+	
+	# 2. Die Waffen in den Verkaufsraum legen!
+	GameManager.shop_inventory = GameManager.armory_inventory
+	
 	#TODO Logik, Tag hochzählen etc.
-	GameManager.change_scene("res://scenes/armory.tscn")
+	GameManager.change_scene("res://scenes/universal_shop.tscn")
 	
 	
 func _on_btn_arena_pressed():

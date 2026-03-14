@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dcv8jmjsn1cwg"]
 
-[ext_resource type="Script" uid="uid://yrpvtr0tr3cw" path="res://scripts/Armory.gd" id="1_jwn4v"]
+[ext_resource type="Script" uid="uid://yrpvtr0tr3cw" path="res://scripts/shop.gd" id="1_jwn4v"]
 [ext_resource type="Texture2D" uid="uid://baguk3ataj7xs" path="res://assets/sprites/armory_bg.jpg" id="1_oaria"]
 [ext_resource type="Texture2D" uid="uid://d1bvd7upkukhw" path="res://assets/sprites/inventory-icons/icon_weapon_armor.png" id="3_jwn4v"]
 
@@ -15,7 +15,7 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-[node name="Armory" type="Control"]
+[node name="Shop" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -27,6 +27,7 @@ size_flags_vertical = 3
 script = ExtResource("1_jwn4v")
 
 [node name="Background" type="TextureRect" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

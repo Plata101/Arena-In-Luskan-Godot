@@ -35,13 +35,22 @@ func set_item_data(data, isInventory: bool = false):
 		buyButton.disabled = false 
 		
 	else:
-		# --- SHOP MODUS (GROSS) ---
-		# Hier müssen wir sicherstellen, dass alles sichtbar ist (falls recycled)
 		iconRect.visible = true
 		nameLabel.visible = true
 		
-		var bonusText = "(+" + str(data["bonus"]) + " " + data["type"] + ")"
-		nameLabel.text = data["name"] + "\n" + bonusText + "\n" + str(data["price"]) + " Gold"
+		# SICHERHEITS-CHECK: Hat das Item überhaupt einen Bonus?
+		var bonusText = ""
+		if data.has("bonus") and data.has("type"):
+			if data["type"] == "Potion":
+				bonusText = "(Heals " + str(data["bonus"]) + " HP)" # Text für Tränke
+			else:
+				bonusText = "(+" + str(data["bonus"]) + " " + data["type"] + ")" # Text für Waffen/Rüstung
+		
+		# Label zusammensetzen (mit oder ohne Bonus)
+		if bonusText != "":
+			nameLabel.text = data["name"] + "\n" + bonusText + "\n" + str(data["price"]) + " Gold"
+		else:
+			nameLabel.text = data["name"] + "\n\n" + str(data["price"]) + " Gold"
 		
 		buyButton.text = "Buy (" + str(data["price"]) + " G)"
 		buyButton.modulate = Color(1, 1, 1) # Normal weiß

@@ -3,6 +3,7 @@ extends Control
 @onready var gridContainer = %GridContainer
 @onready var inventoryGrid = %InventoryGrid
 @onready var blackOverlay = %BlackOverlay
+@onready var background = %Background
 
 var shopItemScene = preload("res://scenes/shop_item.tscn")
 
@@ -10,8 +11,17 @@ var currentInventorySize = 0
 var currentShopSize = 0 # NEU: Größe des Shops merken
 
 func _ready():
+	setup_shop_visuals()
 	update_shop_view() # <--- Geändert
 	update_inventory_view() 
+
+func setup_shop_visuals():
+	# Wenn du einen Background Node hast (z.B. @onready var background = %Background),
+	# kannst du hier das Bild tauschen!
+	if GameManager.current_shop_type == "Armory":
+		background.texture = preload("res://assets/sprites/armory_bg.jpg")
+	elif GameManager.current_shop_type == "Potions":
+		background.texture = preload("res://assets/sprites/potions_sundries_bg.jpg")
 	
 func update_ui():
 	var allItems = gridContainer.get_children()
@@ -39,10 +49,20 @@ func update_inventory_view():
 		child.queue_free()
 	
 	for itemData in GameManager.inventory:
-		# --- NEU: Der Filter! ---
 		var type = itemData.get("type", "")
-		# Wir zeigen das Item NUR an, wenn es Waffe oder Rüstung ist
-		if type == "Strength" or type == "Armor":
+		var should_show = false
+		
+		# --- DER UNIVERSELLE FILTER ---
+		if GameManager.current_shop_type == "Armory":
+			if type == "Strength" or type == "Armor":
+				should_show = true
+				
+		elif GameManager.current_shop_type == "Potions":
+			if type == "Potion" or type == "Trinket" or type == "Misc":
+				should_show = true
+				
+		# Wenn das Item zum Shop passt, zeigen wir es an!
+		if should_show:
 			var newItem = shopItemScene.instantiate()
 			inventoryGrid.add_child(newItem)
 			newItem.set_item_data(itemData, true) 
