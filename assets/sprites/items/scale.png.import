@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://depm03so74fo"
-path="res://.godot/imported/leather.png-b0d3285beb8df48773e5efd4441e199a.ctex"
+uid="uid://du0jgiuou5ngq"
+path="res://.godot/imported/scale.png-935c2ed47533a524cafb58540c4f4c99.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/leather.png"
-dest_files=["res://.godot/imported/leather.png-b0d3285beb8df48773e5efd4441e199a.ctex"]
+source_file="res://assets/sprites/items/scale.png"
+dest_files=["res://.godot/imported/scale.png-935c2ed47533a524cafb58540c4f4c99.ctex"]
 
 [params]
 

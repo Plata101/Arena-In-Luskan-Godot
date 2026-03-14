@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bbg65jtoqxxu3"
-path="res://.godot/imported/dagger.png-ec0b141084db3b1043219b88ba3bebab.ctex"
+uid="uid://6wap60k5248f"
+path="res://.godot/imported/morningstar.png-4528290036aff4f8876b6559a9d25a2b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/dagger.png"
-dest_files=["res://.godot/imported/dagger.png-ec0b141084db3b1043219b88ba3bebab.ctex"]
+source_file="res://assets/sprites/items/morningstar.png"
+dest_files=["res://.godot/imported/morningstar.png-4528290036aff4f8876b6559a9d25a2b.ctex"]
 
 [params]
 

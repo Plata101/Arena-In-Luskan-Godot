@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://6wap60k5248f"
-path="res://.godot/imported/morningstar.png-672c1ef387911d00c9114f2b0c2c8960.ctex"
+uid="uid://depm03so74fo"
+path="res://.godot/imported/leather.png-19b8d3947507ea7a7e4f12433cb83abc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/morningstar.png"
-dest_files=["res://.godot/imported/morningstar.png-672c1ef387911d00c9114f2b0c2c8960.ctex"]
+source_file="res://assets/sprites/items/leather.png"
+dest_files=["res://.godot/imported/leather.png-19b8d3947507ea7a7e4f12433cb83abc.ctex"]
 
 [params]
 

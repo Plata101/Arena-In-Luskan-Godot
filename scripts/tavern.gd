@@ -14,8 +14,8 @@ extends Control
 # Achtung: Pfade prüfen (jpg vs png), aber wenn es vorher ging, passt das.
 var img_day = preload("res://assets/sprites/tavern-day-bg.jpg")
 var img_night = preload("res://assets/sprites/tavern-night-bg.jpg")
-
 var dialogue_scene = preload("res://scenes/dialogue_overlay.tscn")
+var event_modal_scene = preload("res://scenes/event_modal.tscn")
 
 func _ready():
 	# WICHTIG: Achte darauf, dass das Signal korrekt verbunden ist
@@ -28,6 +28,9 @@ func _ready():
 		
 	if btnBartender:
 		btnBartender.pressed.connect(_on_bartender_pressed)
+	
+	if btnEvents:
+		btnEvents.pressed.connect(_on_btn_events_pressed)
 	
 	# Start-Check: Wir rufen direkt die neue Funktion auf
 	update_ui()
@@ -89,16 +92,40 @@ func _on_bartender_pressed():
 
 
 func _on_btn_sleep_pressed():
-	# 1. Gold prüfen und abziehen
-	if GameManager.currentGold >= 10:
-		GameManager.currentGold -= 10
-		
-	GameManager.beers_drank_today = 0
-		
-	# WICHTIG: Hier NUR den Effekt starten. 
-	# Keine Variablen wie "is_night" ändern! Das macht das Main-Script für uns.
-	if GameManager.main_node:
-		GameManager.main_node.play_sleep_effect()
-			
+	if GameManager.daily_events.size() > 0:
+		# Modal öffnen und zwingen, sie zu lesen!
+		openModal()
 	else:
-		print("Nicht genug Gold!")
+		# 1. Gold prüfen und abziehen
+		if GameManager.currentGold >= 10:
+			GameManager.currentGold -= 10
+			
+		GameManager.beers_drank_today = 0
+			
+		# WICHTIG: Hier NUR den Effekt starten. 
+		# Keine Variablen wie "is_night" ändern! Das macht das Main-Script für uns.
+		if GameManager.main_node:
+			GameManager.main_node.play_sleep_effect()
+				
+		else:
+			print("Nicht genug Gold!")
+
+func _on_btn_events_pressed():
+	print("Show event")
+	openModal()
+
+
+func openModal():
+	var modal = event_modal_scene.instantiate()
+	add_child(modal)
+	
+	# Prüfen, ob wir echte Events haben
+	if GameManager.daily_events.size() > 0:
+		modal.setup(GameManager.daily_events)
+	else:
+		# Dummy-Liste erstellen, wenn keine Events da sind
+		var empty_event_list: Array[Dictionary] = [
+			{ "text": "No events have happened." }
+		]
+		modal.setup(empty_event_list)
+	

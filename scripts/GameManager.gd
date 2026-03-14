@@ -30,30 +30,32 @@ var currentDay: int = 1
 var maxDays: int = 100
 var beers_drank_today: int = 0
 
-# Inventory
+# Sammelt alle Events des aktuellen Tages
+var daily_events: Array[Dictionary] = []
 
+# Inventory
 var shop_inventory: Array = [
 	# --- WAFFEN ---
-	{"name": "Dagger", "type": "Strength", "bonus": 1, "price": 5, "icon": "res://assets/sprites/dagger.png"},
-	{"name": "Shortsword", "type": "Strength", "bonus": 2, "price": 10, "icon": "res://assets/sprites/sword.png"},
-	{"name": "Axe", "type": "Strength", "bonus": 2, "price": 8, "icon": "res://assets/sprites/axe.png"},
-	{"name": "Pike", "type": "Strength", "bonus": 3, "price": 20, "icon": "res://assets/sprites/pike.png"},
-	{"name": "Morningstar", "type": "Strength", "bonus": 3, "price": 25, "icon": "res://assets/sprites/morningstar.png"},
+	{"name": "Dagger", "type": "Strength", "bonus": 1, "price": 5, "icon": "res://assets/sprites/items/dagger.png"},
+	{"name": "Shortsword", "type": "Strength", "bonus": 2, "price": 10, "icon": "res://assets/sprites/items/sword.png"},
+	{"name": "Axe", "type": "Strength", "bonus": 2, "price": 8, "icon": "res://assets/sprites/items/axe.png"},
+	{"name": "Pike", "type": "Strength", "bonus": 3, "price": 20, "icon": "res://assets/sprites/items/pike.png"},
+	{"name": "Morningstar", "type": "Strength", "bonus": 3, "price": 25, "icon": "res://assets/sprites/items/morningstar.png"},
 	
 	# --- ARMOR ---
-	{"name": "Cloth Doublet", "type": "Armor", "bonus": 1, "price": 15, "icon": "res://assets/sprites/studded.png"},
-	{"name": "Leather Armor", "type": "Armor", "bonus": 2, "price": 25, "icon": "res://assets/sprites/leather.png"},
-	{"name": "Chainmail", "type": "Armor", "bonus": 3, "price": 35, "icon": "res://assets/sprites/chain.png"},
-	{"name": "Scale Mail", "type": "Armor", "bonus": 4, "price": 50, "icon": "res://assets/sprites/scale.png"},
-	{"name": "Plate Armor", "type": "Armor", "bonus": 5, "price": 100, "icon": "res://assets/sprites/plate.png"},
-	{"name": "Plate Armor2", "type": "Armor", "bonus": 5, "price": 100, "icon": "res://assets/sprites/plate.png"}
+	{"name": "Cloth Doublet", "type": "Armor", "bonus": 1, "price": 15, "icon": "res://assets/sprites/items/studded.png"},
+	{"name": "Leather Armor", "type": "Armor", "bonus": 2, "price": 25, "icon": "res://assets/sprites/items/leather.png"},
+	{"name": "Chainmail", "type": "Armor", "bonus": 3, "price": 35, "icon": "res://assets/sprites/items/chain.png"},
+	{"name": "Scale Mail", "type": "Armor", "bonus": 4, "price": 50, "icon": "res://assets/sprites/items/scale.png"},
+	{"name": "Plate Armor", "type": "Armor", "bonus": 5, "price": 100, "icon": "res://assets/sprites/items/plate.png"},
+	{"name": "Plate Armor2", "type": "Armor", "bonus": 5, "price": 100, "icon": "res://assets/sprites/items/plate.png"}
 ]
 
 # Player Inventory
 var inventory: Array = [
-	{"name": "Healing Potion", "type": "Potion", "bonus": 20, "price": 100, "icon": "res://assets/sprites/potion_blue.png"},
-	{"name": "Mysterious Ring", "type": "Trinket", "bonus": 2, "price": 100, "icon": "res://assets/sprites/ring_ruby.png"},
-	{"name": "Letter", "type": "Misc", "bonus": 0, "price": 0, "icon": "res://assets/sprites/scroll.png"},
+	{"name": "Healing Potion", "type": "Potion", "bonus": 20, "price": 100, "icon": "res://assets/sprites/items/potion_blue.png"},
+	{"name": "Mysterious Ring", "type": "Trinket", "bonus": 2, "price": 100, "icon": "res://assets/sprites/items/ring_ruby.png"},
+	{"name": "Letter", "type": "Misc", "bonus": 0, "price": 0, "icon": "res://assets/sprites/items/scroll.png"},
 ]
 
 var currentEnemy = {} # Hier speichern wir das ausgewählte Monster vor dem Szenenwechsel

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cxv4m21tiptiw"
-path="res://.godot/imported/claw.png-487c3cd69ee5e5d6d3dadabdff6e88ae.ctex"
+uid="uid://h0hdd5acbrtb"
+path="res://.godot/imported/troll.png-8683923184e7715d0fbbd4f93485715e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/claw.png"
-dest_files=["res://.godot/imported/claw.png-487c3cd69ee5e5d6d3dadabdff6e88ae.ctex"]
+source_file="res://assets/sprites/monsters/troll.png"
+dest_files=["res://.godot/imported/troll.png-8683923184e7715d0fbbd4f93485715e.ctex"]
 
 [params]
 

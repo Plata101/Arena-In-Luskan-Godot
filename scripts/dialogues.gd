@@ -48,6 +48,14 @@ var inkeeper = {
 			GameManager.currentGold -= 5
 			GameManager.playerHp += 10
 			GameManager.beers_drank_today += 1
+			GameManager.daily_events.append({
+						"text": "While you were drinking, a thief stole 10 Gold from your pocket!",
+						"effect": func(): GameManager.currentGold -= 10
+					})
+			GameManager.daily_events.append({
+						"text": "Rumors say the King brought a new monster to the arena...",
+						# Hier könntest du später einen Boss freischalten!
+					})
 			if GameManager.playerHp > GameManager.playerMaxHp:
 				GameManager.playerHp = GameManager.playerMaxHp
 			if GameManager.main_node and GameManager.main_node.has_method("update_ui"):
@@ -76,7 +84,8 @@ var inkeeper = {
 				"next_node": "end",
 				# Optional: Den normalen "Tschüss"-Button verstecken, wenn man betrunken ist
 				"condition": func(): return GameManager.beers_drank_today < 2
-			}
+			},
+			
 		]
 	},
 	"ale": {

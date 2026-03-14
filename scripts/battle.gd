@@ -81,7 +81,7 @@ func _ready():
 		load_slot(heroWeaponIcon, GameManager.equipped_weapon["icon"])
 	else:
 		# Nichts ausgerüstet? Lade die Faust! (Achte auf den richtigen Pfad)
-		load_slot(heroWeaponIcon, "res://assets/sprites/fist.png") 
+		load_slot(heroWeaponIcon, "res://assets/sprites/items/fist.png") 
 		
 	# RÜSTUNG LADEN
 	if GameManager.equipped_armor != null:
@@ -89,7 +89,7 @@ func _ready():
 		load_slot(heroArmorIcon, GameManager.equipped_armor["icon"])
 	else:
 		# Nichts ausgerüstet? Slot leeren! (oder ein Standard-Hemd laden)
-		load_slot(heroArmorIcon, "res://assets/sprites/no_armor.png") 
+		load_slot(heroArmorIcon, "res://assets/sprites/items/no_armor.png") 
 	
 	# 4. Kampf vorbereiten
 	if GameManager.currentEnemy:

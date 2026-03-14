@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cjla0qa0ii2x5"
-path="res://.godot/imported/plate.png-b65d248eb5571b72f81546eb64822c97.ctex"
+uid="uid://rgb1gmsoy13r"
+path="res://.godot/imported/scroll.png-36c70e330a89bbeac3ca3e2ccc337531.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/plate.png"
-dest_files=["res://.godot/imported/plate.png-b65d248eb5571b72f81546eb64822c97.ctex"]
+source_file="res://assets/sprites/items/scroll.png"
+dest_files=["res://.godot/imported/scroll.png-36c70e330a89bbeac3ca3e2ccc337531.ctex"]
 
 [params]
 

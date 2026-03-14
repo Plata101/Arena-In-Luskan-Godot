@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://di67wwlyyqra4"
-path="res://.godot/imported/orc.png-7912b6622febc3ddee3db1dcad97c7f4.ctex"
+uid="uid://cxv4m21tiptiw"
+path="res://.godot/imported/claw.png-2b2bfa248196119620cd917cd54072e7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/orc.png"
-dest_files=["res://.godot/imported/orc.png-7912b6622febc3ddee3db1dcad97c7f4.ctex"]
+source_file="res://assets/sprites/items/claw.png"
+dest_files=["res://.godot/imported/claw.png-2b2bfa248196119620cd917cd54072e7.ctex"]
 
 [params]
 

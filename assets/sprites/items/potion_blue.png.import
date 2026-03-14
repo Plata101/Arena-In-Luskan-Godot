@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://db4xx1mxhna6o"
-path="res://.godot/imported/chain.png-1742b1287bda9aa0b31619ea39af033f.ctex"
+uid="uid://b7dxfcajfdkvc"
+path="res://.godot/imported/potion_blue.png-88fd5c92d96d2a3d4091a65174acf3ac.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/chain.png"
-dest_files=["res://.godot/imported/chain.png-1742b1287bda9aa0b31619ea39af033f.ctex"]
+source_file="res://assets/sprites/items/potion_blue.png"
+dest_files=["res://.godot/imported/potion_blue.png-88fd5c92d96d2a3d4091a65174acf3ac.ctex"]
 
 [params]
 

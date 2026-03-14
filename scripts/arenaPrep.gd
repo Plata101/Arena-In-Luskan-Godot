@@ -22,9 +22,9 @@ var enemies = [
 		"hp": 20,
 		"damage": 3,
 		"reward_gold": 10,
-		"icon": "res://assets/sprites/goblin.png", # Pfad anpassen!
-		"weapon": "res://assets/sprites/dagger.png", # Beispielpfad!
-		"armor": "res://assets/sprites/leather.png",
+		"icon": "res://assets/sprites/monsters/goblin.png", # Pfad anpassen!
+		"weapon": "res://assets/sprites/items/dagger.png", # Beispielpfad!
+		"armor": "res://assets/sprites/items/leather.png",
 		"loot_chance": 0.3, # 30% Chance das zu droppen
 		"min_level": 1, # Optional: Erst ab Level X sichtbar
 		"description": "A small but sneaky thief lurking in the shadows. He would rather steal than fight."
@@ -35,9 +35,9 @@ var enemies = [
 		"hp": 45,
 		"damage": 6,
 		"reward_gold": 25,
-		"icon": "res://assets/sprites/orc.png",
-		"weapon": "res://assets/sprites/axe.png",
-		"armor": "res://assets/sprites/plate.png",
+		"icon": "res://assets/sprites/monsters/orc.png",
+		"weapon": "res://assets/sprites/items/axe.png",
+		"armor": "res://assets/sprites/items/plate.png",
 		"loot_chance": 0.3, # 30% Chance das zu droppen
 		"min_level": 1,
 		"description": "A brutal soldier of the Horde. His axe is rusty, but deadly. He smells like old cheese and violence."
@@ -48,9 +48,9 @@ var enemies = [
 		"hp": 200,
 		"damage": 12,
 		"reward_gold": 100,
-		"icon": "res://assets/sprites/troll.png",
-		"weapon": "res://assets/sprites/claw.png",
-		"armor": "res://assets/sprites/scale.png",
+		"icon": "res://assets/sprites/monsters/troll.png",
+		"weapon": "res://assets/sprites/items/claw.png",
+		"armor": "res://assets/sprites/items/scale.png",
 		"loot_chance": 0.3, # 30% Chance das zu droppen
 		"min_level": 1,
 		"description": "A massive monster from the depths. His skin is as hard as stone. Only the bravest dare approach him."

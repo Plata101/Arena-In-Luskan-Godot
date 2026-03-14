@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cdbcpbobv4vux"
-path="res://.godot/imported/pike.png-50c4f686df7cd90a187e8d9ca7e84b5a.ctex"
+uid="uid://bktdhww4ekg8o"
+path="res://.godot/imported/axe.png-d56c471c85f51d247ed86bd9ed6b303a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/pike.png"
-dest_files=["res://.godot/imported/pike.png-50c4f686df7cd90a187e8d9ca7e84b5a.ctex"]
+source_file="res://assets/sprites/items/axe.png"
+dest_files=["res://.godot/imported/axe.png-d56c471c85f51d247ed86bd9ed6b303a.ctex"]
 
 [params]
 

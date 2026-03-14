@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://rgb1gmsoy13r"
-path="res://.godot/imported/scroll.png-f004d16f53e93825231bed9748dfbf60.ctex"
+uid="uid://bs4oyuyh4dx2p"
+path="res://.godot/imported/fist.png-fd71e6ee7dcea868ca8f2e50eff28478.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/scroll.png"
-dest_files=["res://.godot/imported/scroll.png-f004d16f53e93825231bed9748dfbf60.ctex"]
+source_file="res://assets/sprites/items/fist.png"
+dest_files=["res://.godot/imported/fist.png-fd71e6ee7dcea868ca8f2e50eff28478.ctex"]
 
 [params]
 

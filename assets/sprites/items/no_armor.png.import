@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bktdhww4ekg8o"
-path="res://.godot/imported/axe.png-0cb17724685ecba1b5e9a9d10930bb48.ctex"
+uid="uid://u7eva48pispu"
+path="res://.godot/imported/no_armor.png-2d8d47b83d83f44bf15e9970b1f02672.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/axe.png"
-dest_files=["res://.godot/imported/axe.png-0cb17724685ecba1b5e9a9d10930bb48.ctex"]
+source_file="res://assets/sprites/items/no_armor.png"
+dest_files=["res://.godot/imported/no_armor.png-2d8d47b83d83f44bf15e9970b1f02672.ctex"]
 
 [params]
 

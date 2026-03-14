@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://h0hdd5acbrtb"
-path="res://.godot/imported/troll.png-ea1f136fd732fac481f64b3c0f6d3ee0.ctex"
+uid="uid://cdbcpbobv4vux"
+path="res://.godot/imported/pike.png-0b32468d920ee168678d4327df9d4c3f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/troll.png"
-dest_files=["res://.godot/imported/troll.png-ea1f136fd732fac481f64b3c0f6d3ee0.ctex"]
+source_file="res://assets/sprites/items/pike.png"
+dest_files=["res://.godot/imported/pike.png-0b32468d920ee168678d4327df9d4c3f.ctex"]
 
 [params]
 

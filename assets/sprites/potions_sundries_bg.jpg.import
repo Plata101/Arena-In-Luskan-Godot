@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://du0jgiuou5ngq"
-path="res://.godot/imported/scale.png-0516b750f3f5ce3896e153740b7212ba.ctex"
+uid="uid://comft6va0yfkm"
+path="res://.godot/imported/potions_sundries_bg.jpg-367ca5bdfe518da7e1d5b7dbb9ed1014.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/scale.png"
-dest_files=["res://.godot/imported/scale.png-0516b750f3f5ce3896e153740b7212ba.ctex"]
+source_file="res://assets/sprites/potions_sundries_bg.jpg"
+dest_files=["res://.godot/imported/potions_sundries_bg.jpg-367ca5bdfe518da7e1d5b7dbb9ed1014.ctex"]
 
 [params]
 

@@ -49,7 +49,7 @@ offset_left = 191.0
 offset_top = 258.0
 offset_right = 303.0
 offset_bottom = 289.0
-text = "Eat & drink"
+text = "Talk to innkeeper"
 
 [node name="BtnRumors" type="Button" parent="."]
 unique_name_in_owner = true
