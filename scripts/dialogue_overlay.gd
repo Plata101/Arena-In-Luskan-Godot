@@ -56,9 +56,12 @@ func load_dialogue_node(node_id: String):
 	if raw_text is Callable:
 		# Wenn es eine Funktion ist, rufen wir sie auf, um den Text zu bekommen!
 		dialogueText.text = "[color=yellow][i]" + raw_text.call() + "[/i][/color]"
+		start_typewriter()
+		
 	else:
 		# Wenn es ein normaler Text (String) ist, zeigen wir ihn einfach an
 		dialogueText.text = "[color=yellow][i]" + str(raw_text) + "[/i][/color]"
+		start_typewriter()
 	
 	for child in choicesContainer.get_children():
 		child.queue_free()
@@ -73,6 +76,19 @@ func load_dialogue_node(node_id: String):
 		btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		btn.pressed.connect(_on_choice_pressed.bind(choice))
 		choicesContainer.add_child(btn)
+		
+func start_typewriter():
+	# 1. Text beim Start komplett unsichtbar machen (0% sichtbar)
+	dialogueText.visible_ratio = 0.0
+	
+	# 2. Dauer dynamisch berechnen! 
+	# get_parsed_text() ignoriert [color] und [i] Tags beim Zählen!
+	var visible_characters = dialogueText.get_parsed_text().length()
+	var type_duration = visible_characters * 0.02 
+	
+	# 3. Den Tween erstellen und den Text sanft einblenden
+	var tween = create_tween()
+	tween.tween_property(dialogueText, "visible_ratio", 1.0, type_duration)
 
 func _on_choice_pressed(choice_data: Dictionary):
 	# --- NEU: EFFEKT AUSFÜHREN ---

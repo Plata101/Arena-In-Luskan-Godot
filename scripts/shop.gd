@@ -4,6 +4,7 @@ extends Control
 @onready var inventoryGrid = %InventoryGrid
 @onready var blackOverlay = %BlackOverlay
 @onready var background = %Background
+@onready var inventoryIcon = %InventoryIcon
 
 var shopItemScene = preload("res://scenes/shop_item.tscn")
 
@@ -20,8 +21,10 @@ func setup_shop_visuals():
 	# kannst du hier das Bild tauschen!
 	if GameManager.current_shop_type == "Armory":
 		background.texture = preload("res://assets/sprites/armory_bg.jpg")
+		inventoryIcon.texture = preload("res://assets/sprites/inventory-icons/icon_weapon_armor.png")
 	elif GameManager.current_shop_type == "Potions":
 		background.texture = preload("res://assets/sprites/potions_sundries_bg.jpg")
+		inventoryIcon.texture = preload("res://assets/sprites/inventory-icons/icon_potions.png")
 	
 func update_ui():
 	var allItems = gridContainer.get_children()

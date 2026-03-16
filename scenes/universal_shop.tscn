@@ -90,7 +90,8 @@ size_flags_horizontal = 3
 [node name="WeaponsArmor" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MainContent/PanelContainer/InventoryContainer"]
 layout_mode = 2
 
-[node name="WeaponsIcon" type="TextureRect" parent="MarginContainer/VBoxContainer/MainContent/PanelContainer/InventoryContainer/WeaponsArmor"]
+[node name="InventoryIcon" type="TextureRect" parent="MarginContainer/VBoxContainer/MainContent/PanelContainer/InventoryContainer/WeaponsArmor"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(36, 36)
 layout_mode = 2
 texture = ExtResource("3_jwn4v")
