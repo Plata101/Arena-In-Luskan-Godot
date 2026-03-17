@@ -78,17 +78,26 @@ func load_dialogue_node(node_id: String):
 		choicesContainer.add_child(btn)
 		
 func start_typewriter():
-	# 1. Text beim Start komplett unsichtbar machen (0% sichtbar)
+	# 1. Text beim Start komplett unsichtbar machen
 	dialogueText.visible_ratio = 0.0
 	
-	# 2. Dauer dynamisch berechnen! 
-	# get_parsed_text() ignoriert [color] und [i] Tags beim Zählen!
+	# --- NEU: Die Box mit den Antwort-Buttons unsichtbar machen (Alpha = 0) ---
+	choicesContainer.modulate.a = 0.0 
+	
+	# 2. Dauer dynamisch berechnen
 	var visible_characters = dialogueText.get_parsed_text().length()
 	var type_duration = visible_characters * 0.02 
 	
-	# 3. Den Tween erstellen und den Text sanft einblenden
+	# 3. Den Tween erstellen
 	var tween = create_tween()
+	
+	# Aktion A: Den Text Buchstabe für Buchstabe einblenden
 	tween.tween_property(dialogueText, "visible_ratio", 1.0, type_duration)
+	
+	# --- NEU: Aktion B: Die Buttons sanft einblenden ---
+	# Da hier KEIN parallel() steht, wartet Godot automatisch, 
+	# bis Aktion A komplett fertig ist!
+	tween.tween_property(choicesContainer, "modulate:a", 1.0, 0.3)
 
 func _on_choice_pressed(choice_data: Dictionary):
 	# --- NEU: EFFEKT AUSFÜHREN ---
