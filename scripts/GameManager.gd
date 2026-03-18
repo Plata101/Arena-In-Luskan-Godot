@@ -4,16 +4,21 @@ extends Node
 var main_node = null
 
 # Spieler-Daten
-var currentGold: int = 100
-var playerHp: int = 100
-var playerMaxHp: int = 100
-var playerStrength: int = 5
+
+# --- NEUE SPIELER-DATEN ---
+var player_name: String = "Unknown"
+var player_class: String = ""
+
+var currentGold: int
+var playerHp: int
+var playerMaxHp: int
+var playerStrength: int
 var playerArmor: int = 0
 
 # Neue Stats
-var playerStamina: int = 5
-var playerDexterity: int = 5
-var playerLuck: int = 5
+var playerStamina: int
+var playerDexterity: int
+var playerLuck: int
 
 var playerEndurance: int = 100
 var playerMaxEndurance: int = 100
@@ -71,6 +76,8 @@ var inventory: Array = [
 	{"name": "Letter", "type": "Misc", "bonus": 0, "price": 0, "icon": "res://assets/sprites/items/scroll.png"},
 ]
 
+
+
 var currentEnemy = {} # Hier speichern wir das ausgewählte Monster vor dem Szenenwechsel
 
 # NEUE VARIABLEN FÜR DEN LOOP
@@ -81,6 +88,38 @@ var is_night = false
 func _ready():
 	# Sortiert den Shop direkt beim Start einmal durch
 	sort_inventories()
+	
+	
+func setup_player(chosen_class: String):
+	player_class = chosen_class
+	
+	if chosen_class == "Warrior":
+		currentGold = 100
+		playerMaxHp = 100
+		playerStrength = 6
+		playerStamina = 6
+		playerDexterity = 4
+		playerLuck = 2
+		# Hier später Start-Items (Schwert & Rüstung) ins Inventar pushen
+		
+	elif chosen_class == "Thief":
+		currentGold = 200
+		playerMaxHp = 80
+		playerStrength = 3
+		playerStamina = 4
+		playerDexterity = 6
+		playerLuck = 6
+		
+	elif chosen_class == "Brawler":
+		currentGold = 50
+		playerMaxHp = 150
+		playerStrength = 7
+		playerStamina = 7
+		playerDexterity = 3
+		playerLuck = 4
+		
+	# Am Ende HP voll machen!
+	playerHp = playerMaxHp
 
 func sort_inventories():
 	# Sortiert alle Arrays alphabetisch (A-Z) basierend auf dem "name"-Wert
