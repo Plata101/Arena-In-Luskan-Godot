@@ -1,6 +1,7 @@
 extends Node2D
 
 # --- UI REFERENZEN ---
+
 @onready var background = %Background
 @onready var goldLabel = %GoldLabel
 @onready var dayLabel = %DayLabel

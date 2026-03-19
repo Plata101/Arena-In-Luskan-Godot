@@ -24,6 +24,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="UI_Layer" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
 
 [node name="TopBar" type="Panel" parent="UI_Layer"]
 custom_minimum_size = Vector2(1024, 50)

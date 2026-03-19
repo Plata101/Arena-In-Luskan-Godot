@@ -2,6 +2,7 @@ extends Control
 
 # UI Referenzen
 @onready var world_container = %WorldContainer
+@onready var uiTopLayer = %UI_Layer
 @onready var black_overlay = %BlackOverlay
 @onready var gold_label = %GoldLabel
 @onready var day_label = %DayLabel
@@ -9,7 +10,7 @@ extends Control
 @onready var btn_inventory = %BtnInventory
 
 # Pfad zur Start-Szene (City Hub)
-var start_scene_path = "res://scenes/city_hub.tscn"
+var start_scene_path = "res://scenes/intro_screen.tscn"
 # Wir merken uns die instanziierte Szene, um sie löschen zu können
 var current_scene_node = null
 
@@ -17,12 +18,16 @@ func _ready():
 	# Wir melden uns beim GameManager an
 	GameManager.main_node = self
 	
+	# UI Bar verstecken
+	uiTopLayer.visible = false
 	# Overlay initialisieren (sicherstellen, dass es unsichtbar startet)
 	if black_overlay:
 		black_overlay.visible = true # Muss an sein, damit man es sieht
 		black_overlay.modulate.a = 0.0 # Aber komplett durchsichtig
 		# Maus-Filter ignorieren, damit man klicken kann
 		black_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	
+	
 	
 	# Buttons verbinden
 	btn_back.pressed.connect(_on_btn_back_pressed)
@@ -75,6 +80,12 @@ func change_scene(scene_path: String):
 	black_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	print("Fade fertig.")
 	
+
+# --- NEUE FUNKTION: Wird vom Intro aufgerufen ---
+func show_ui_bar():
+	uiTopLayer.visible = true
+	update_ui() # Aktualisiert direkt die Gold/Tages-Anzeige!
+
 
 # --- INTERNE FUNKTION ZUM TAUSCHEN (ohne Fade) ---
 func _switch_scene_content(scene_path: String):

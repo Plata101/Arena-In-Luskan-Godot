@@ -78,12 +78,16 @@ func _on_confirm_name_pressed():
 # --- ENDE: AB IN DIE STADT ---
 func choose_class(chosen_class: String):
 	print("Player chose: ", chosen_class)
-	
-	# Werte im GameManager setzen
 	GameManager.setup_player(chosen_class)
 	
-	# Wechsel zur Stadt (Pfad evtl. anpassen!)
+	# Wechsel zur Stadt über die Main-Szene
 	if GameManager.main_node:
+		# 1. UI-Leiste einschalten
+		if GameManager.main_node.has_method("show_ui_bar"):
+			GameManager.main_node.show_ui_bar()
+			
+		# 2. Mit schönem Fade in die Stadt wechseln!
 		GameManager.main_node.change_scene("res://scenes/city_hub.tscn")
 	else:
+		# Notfall-Fallback (sollte eigentlich nie mehr passieren)
 		get_tree().change_scene_to_file("res://scenes/city_hub.tscn")
