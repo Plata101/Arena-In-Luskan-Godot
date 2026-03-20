@@ -4,6 +4,8 @@ extends Control
 @onready var btnClose = %BtnClose # Dein X-Button
 
 # Mittlere Spalte (Stats)
+@onready var nameValue = %NameValue
+
 @onready var hpLabel = %HpValueLabel 
 @onready var enduranceLabel = %EnduranceValueLabel
 @onready var apLabel = %ActionPointsValueLabel
@@ -30,11 +32,14 @@ func _ready():
 	populate_inventory()
 
 func update_stats():
+	
+
 	# 1. Basiswerte aus dem GameManager holen
 	var current_str = GameManager.playerStrength
 	var current_armor = GameManager.playerArmorClass
 	var current_luck = GameManager.playerLuck
 	
+	nameValue.text = GameManager.player_name
 	goldLabel.text = str(GameManager.currentGold)
 	
 	# 2. Boni auslesen (falls etwas ausgerüstet ist)

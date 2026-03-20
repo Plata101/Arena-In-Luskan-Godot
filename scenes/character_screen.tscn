@@ -86,6 +86,7 @@ layout_mode = 2
 text = "Name:"
 
 [node name="NameValue" type="Label" parent="MarginContainer/HBoxContainer/LeftColumn/GridContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Garth von Galadon"
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b7y2on6nak23x"
-path="res://.godot/imported/brawler.jpg-d4e20043cdc0686493374b0f317451fc.ctex"
+uid="uid://dkklnphleet08"
+path="res://.godot/imported/title.png-38a305cc8316c1bd6bcbe3f9441ae050.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/brawler.jpg"
-dest_files=["res://.godot/imported/brawler.jpg-d4e20043cdc0686493374b0f317451fc.ctex"]
+source_file="res://assets/sprites/title.png"
+dest_files=["res://.godot/imported/title.png-38a305cc8316c1bd6bcbe3f9441ae050.ctex"]
 
 [params]
 

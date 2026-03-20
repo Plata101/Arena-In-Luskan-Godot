@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://ciuotqx68bcya"]
+[gd_scene load_steps=7 format=3 uid="uid://ciuotqx68bcya"]
 
 [ext_resource type="Texture2D" uid="uid://bhxl0vh7kc64m" path="res://assets/sprites/startscreen-bg.jpg" id="1_knwjy"]
 [ext_resource type="Script" uid="uid://bcgo8wrbx5fw7" path="res://scripts/intro_screen.gd" id="1_m3gk3"]
+[ext_resource type="Texture2D" uid="uid://dkklnphleet08" path="res://assets/sprites/title.png" id="3_q1oon"]
+[ext_resource type="Texture2D" uid="uid://bcgdr184e4yvt" path="res://assets/sprites/warrior.jpg" id="4_g5fjw"]
+[ext_resource type="Texture2D" uid="uid://c8k1de2kk7xut" path="res://assets/sprites/thief.jpg" id="5_dc7ax"]
+[ext_resource type="Texture2D" uid="uid://b7y2on6nak23x" path="res://assets/sprites/brawler.jpg" id="6_14uot"]
 
 [node name="IntroScreen" type="Control"]
 layout_mode = 3
@@ -31,6 +35,23 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.705882)
 
+[node name="GauntletLogo" type="TextureRect" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(400, 200)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -200.0
+offset_top = -50.0
+offset_right = 200.0
+offset_bottom = 332.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = ExtResource("3_q1oon")
+expand_mode = 2
+
 [node name="LoreContainer" type="VBoxContainer" parent="."]
 unique_name_in_owner = true
 layout_mode = 1
@@ -39,23 +60,27 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -310.0
+offset_top = 20.0
+offset_right = 310.0
+offset_bottom = 60.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="LoreText" type="RichTextLabel" parent="LoreContainer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(600, 0)
+custom_minimum_size = Vector2(620, 0)
 layout_mode = 2
 bbcode_enabled = true
 fit_content = true
 
-[node name="BtnContinue" type="Button" parent="LoreContainer"]
+[node name="BtnContinue" type="Button" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
+offset_left = 202.0
+offset_top = 418.0
+offset_right = 822.0
+offset_bottom = 449.0
 text = "Continue"
 
 [node name="NameContainer" type="VBoxContainer" parent="."]
@@ -72,6 +97,7 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 15
 
 [node name="Label" type="Label" parent="NameContainer"]
 layout_mode = 2
@@ -80,6 +106,7 @@ text = "What is your name, gladiator?"
 [node name="NameInput" type="LineEdit" parent="NameContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+alignment = 1
 
 [node name="BtnConfirmName" type="Button" parent="NameContainer"]
 unique_name_in_owner = true
@@ -94,10 +121,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -332.0
+offset_top = -270.0
+offset_right = 332.0
+offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 20
@@ -105,14 +132,55 @@ theme_override_constants/separation = 20
 [node name="BtnWarrior" type="Button" parent="ClassContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_constants/icon_max_width = 200
 text = "Warrior"
+icon = ExtResource("4_g5fjw")
+icon_alignment = 1
+vertical_icon_alignment = 0
 
 [node name="BtnThief" type="Button" parent="ClassContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_constants/icon_max_width = 200
 text = "Thief"
+icon = ExtResource("5_dc7ax")
+icon_alignment = 1
+vertical_icon_alignment = 0
 
 [node name="BtnBrawler" type="Button" parent="ClassContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_constants/icon_max_width = 200
 text = "Brawler"
+icon = ExtResource("6_14uot")
+icon_alignment = 1
+vertical_icon_alignment = 0
+
+[node name="ClassStatsPanel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(800, 0)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -450.0
+offset_top = -290.0
+offset_right = 450.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="ClassStatsPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="ClassStatsLabel" type="RichTextLabel" parent="ClassStatsPanel/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+bbcode_enabled = true
+fit_content = true

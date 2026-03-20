@@ -100,6 +100,8 @@ func setup_player(chosen_class: String):
 		playerStamina = 6
 		playerDexterity = 4
 		playerLuck = 2
+		inventory.append({"name": "Guard Armor", "type": "Armor", "bonus": 2, "price": 15, "icon": "res://assets/sprites/items/leather.png"})
+		inventory.append({"name": "Rusty Sword", "type": "Armor", "bonus": 2, "price": 15, "icon": "res://assets/sprites/items/sword.png"})
 		# Hier später Start-Items (Schwert & Rüstung) ins Inventar pushen
 		
 	elif chosen_class == "Thief":
@@ -109,6 +111,7 @@ func setup_player(chosen_class: String):
 		playerStamina = 4
 		playerDexterity = 6
 		playerLuck = 6
+		inventory.append({"name": "Blood-Dagger", "type": "Strength", "bonus": 3, "price": 30, "icon": "res://assets/sprites/items/dagger.png"})
 		
 	elif chosen_class == "Brawler":
 		currentGold = 50
@@ -117,7 +120,8 @@ func setup_player(chosen_class: String):
 		playerStamina = 7
 		playerDexterity = 3
 		playerLuck = 4
-		
+		inventory.append({"name": "Scale Mail", "type": "Armor", "bonus": 4, "price": 50, "icon": "res://assets/sprites/items/scale.png"})
+		inventory.append({"name": "Broadsword", "type": "Strength", "bonus": 5, "price": 10, "icon": "res://assets/sprites/items/sword.png"},)
 	# Am Ende HP voll machen!
 	playerHp = playerMaxHp
 
