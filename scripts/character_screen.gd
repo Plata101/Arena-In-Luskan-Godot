@@ -4,7 +4,9 @@ extends Control
 @onready var btnClose = %BtnClose # Dein X-Button
 
 # Mittlere Spalte (Stats)
+@onready var heroImage = %HeroImage
 @onready var nameValue = %NameValue
+@onready var alignmentValue = %AlignmentValue
 
 @onready var hpLabel = %HpValueLabel 
 @onready var enduranceLabel = %EnduranceValueLabel
@@ -22,6 +24,8 @@ extends Control
 @onready var potionsList = %PotionsList
 @onready var miscList = %MiscList
 
+@onready var questList = %QuestList
+
 func _ready():
 	# 1. Close Button verbinden
 	if btnClose:
@@ -30,16 +34,18 @@ func _ready():
 	# 2. Werte aktualisieren
 	update_stats()
 	populate_inventory()
+	populate_quests()
 
 func update_stats():
-	
-
 	# 1. Basiswerte aus dem GameManager holen
 	var current_str = GameManager.playerStrength
 	var current_armor = GameManager.playerArmorClass
 	var current_luck = GameManager.playerLuck
 	
+	if GameManager.playerImage != "":
+		heroImage.texture = load(GameManager.playerImage)
 	nameValue.text = GameManager.player_name
+	alignmentValue.text = GameManager.playerAlignment
 	goldLabel.text = str(GameManager.currentGold)
 	
 	# 2. Boni auslesen (falls etwas ausgerüstet ist)
@@ -183,6 +189,28 @@ func populate_inventory():
 			potionsList.add_child(row)
 		else:
 			miscList.add_child(row)
+
+func populate_quests():
+	# 1. Alte Quests in der Liste löschen
+	for child in questList.get_children(): 
+		child.queue_free()
+		
+	# 2. Aktive Quests aus dem GameManager laden
+	for quest in GameManager.active_quests:
+		var quest_label = RichTextLabel.new()
+		quest_label.bbcode_enabled = true
+		quest_label.fit_content = true
+		
+		# Wir machen den Titel fett und gelb, und die Beschreibung normal darunter
+		quest_label.text = "[color=yellow][b]" + quest["title"] + "[/b][/color]" + quest["desc"]
+		
+		questList.add_child(quest_label)
+		
+		# Ein kleiner Abstandshalter zwischen den Quests, falls du mehrere hast
+		var spacer = Control.new()
+		spacer.custom_minimum_size.y = 1
+		questList.add_child(spacer)
+
 
 func _on_item_action_pressed(item_data):
 	var type = item_data.get("type", "")

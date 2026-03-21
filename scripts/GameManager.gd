@@ -6,6 +6,7 @@ var main_node = null
 # Spieler-Daten
 
 # --- NEUE SPIELER-DATEN ---
+var playerImage: String
 var player_name: String = "Unknown"
 var player_class: String = ""
 
@@ -20,10 +21,12 @@ var playerStamina: int
 var playerDexterity: int
 var playerLuck: int
 
-var playerEndurance: int = 100
-var playerMaxEndurance: int = 100
+var playerEndurance: int
+var playerMaxEndurance: int
 var playerActionPoints: int = 2
 var playerArmorClass: int = 10 # Basis-Rüstung
+
+var playerAlignment: String = ""
 
 # Equipment Slots (Hier speichern wir die ausgerüsteten Dictionaries)
 var equipped_weapon = null
@@ -34,6 +37,10 @@ var equipped_trinket = null
 var currentDay: int = 1
 var maxDays: int = 100
 var beers_drank_today: int = 0
+
+# --- QUEST SYSTEM ---
+var active_quests: Array[Dictionary] = []
+
 
 # Sammelt alle Events des aktuellen Tages
 var daily_events: Array[Dictionary] = []
@@ -94,36 +101,56 @@ func setup_player(chosen_class: String):
 	player_class = chosen_class
 	
 	if chosen_class == "Warrior":
+		playerImage = "res://assets/sprites/warrior.jpg"
+		active_quests.append({"title": "- MQ: ", "desc": "Get a date with the princess"})
+		active_quests.append({"title": "", "desc": "- Win your first fight in the arena"})
+		active_quests.append({"title": "", "desc": "- Drink twenty beers in tavern"})
 		currentGold = 100
 		playerMaxHp = 100
+		playerMaxEndurance = 150
 		playerStrength = 6
 		playerStamina = 6
 		playerDexterity = 4
 		playerLuck = 2
+		playerAlignment = "Neutral"
 		inventory.append({"name": "Guard Armor", "type": "Armor", "bonus": 2, "price": 15, "icon": "res://assets/sprites/items/leather.png"})
 		inventory.append({"name": "Rusty Sword", "type": "Armor", "bonus": 2, "price": 15, "icon": "res://assets/sprites/items/sword.png"})
 		# Hier später Start-Items (Schwert & Rüstung) ins Inventar pushen
 		
 	elif chosen_class == "Thief":
+		playerImage = "res://assets/sprites/thief.jpg"
+		active_quests.append({"title": "- Main: ", "desc": "Loot the kings treasure chamber"})
+		active_quests.append({"title": "", "desc": "- Win your first fight in the arena"})
+		active_quests.append({"title": "", "desc": "- Drink twenty beers in tavern"})
+		active_quests.append({"title": "", "desc": "- Drink foury beers in tavern"})
 		currentGold = 200
 		playerMaxHp = 80
+		playerMaxEndurance = 120
 		playerStrength = 3
 		playerStamina = 4
 		playerDexterity = 6
 		playerLuck = 6
+		playerAlignment = "Evil"
 		inventory.append({"name": "Blood-Dagger", "type": "Strength", "bonus": 3, "price": 30, "icon": "res://assets/sprites/items/dagger.png"})
 		
 	elif chosen_class == "Brawler":
+		playerImage = "res://assets/sprites/brawler.jpg"
+		active_quests.append({"title": "- MQ: ", "desc": "Become the Grand Champion to restore your family's honor"})
+		active_quests.append({"title": "", "desc": "- Win your first fight in the arena"})
+		active_quests.append({"title": "", "desc": "- Drink twenty beers in tavern"})
 		currentGold = 50
 		playerMaxHp = 150
+		playerMaxEndurance = 200
 		playerStrength = 7
 		playerStamina = 7
 		playerDexterity = 3
 		playerLuck = 4
+		playerAlignment = "Good"
 		inventory.append({"name": "Scale Mail", "type": "Armor", "bonus": 4, "price": 50, "icon": "res://assets/sprites/items/scale.png"})
-		inventory.append({"name": "Broadsword", "type": "Strength", "bonus": 5, "price": 10, "icon": "res://assets/sprites/items/sword.png"},)
+		inventory.append({"name": "Broadsword", "type": "Strength", "bonus": 5, "price": 10, "icon": "res://assets/sprites/items/sword.png"})
 	# Am Ende HP voll machen!
 	playerHp = playerMaxHp
+	playerEndurance = playerMaxEndurance
 
 func sort_inventories():
 	# Sortiert alle Arrays alphabetisch (A-Z) basierend auf dem "name"-Wert

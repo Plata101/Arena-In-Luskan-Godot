@@ -21,15 +21,15 @@ extends Control
 # --- CHARAKTER DATEN ---
 var char_data = {
 	"Warrior": {
-		"gold": 100, "hp": 100, "str": 6, "stam": 6, "dex": 4, "luck": 2,
+		"gold": 100, "hp": 100, "end": 150, "str": 6, "stam": 6, "dex": 4, "luck": 2, "alignment": 'Neutral',
 		"story": "[indent][i]A former castle guard, discarded from duty because of peeping on the princess in her bedroom, you are lucky not to have been executed. Without any income and your last savings in your pocket you made camp in the dragon's tankard in the city. The innkeeper owes you, because you let him slip on missing curfew so many times. So you can stay here for the time being. You arrive at your chamber, putting your leather armor and short sword in a corner and the only idea you have, is fighting in the gauntlet to make enough gold to survive.[/i][/indent]\n\n[center][b]Main Quest:[/b][/center]\n[center]Get a date with the princess[/center]"
 	},
 	"Thief": {
-		"gold": 200, "hp": 80, "str": 3, "stam": 4, "dex": 6, "luck": 6,
+		"gold": 200, "hp": 80, "end": 120, "str": 3, "stam": 4, "dex": 6, "luck": 6, "alignment": 'Evil',
 		"story": "[indent][i]Your thieving days are over. You've been caught one too many times and people know your face too well. Time to switch your profession and change your lookpicks for a sword. Fortunately you are well stacked from you last job and at least can afford some gear before entering into deadly combat. A room in the dragon's tankard is your homebase. You steal back the 10 Gold daily cost every time the naive innkeeper collects, so you are renting for free. Also your connections gives you more frequent access to the black market. You start with a dagger.[/i][/indent]\n\n[center][b]Main Quest:[/b][/center]\n[center]Loot the kings treasure chamber[/center]"
 	},
 	"Brawler": {
-		"gold": 50, "hp": 150, "str": 7, "stam": 7, "dex": 3, "luck": 4,
+		"gold": 50, "hp": 150, "end": 200, "str": 7, "stam": 7, "dex": 3, "luck": 4, "alignment": 'Good',
 		"story": "[indent][i]Oh well, that last campaign was too much for your knight, he was killed in combat and you barely made it limping back to the city yourself, forgotten by your peers. Much worse, your family has left the city and sold the estate, thinking you were killed. No knight has any use for a squire like you, so you deceide to take whatever fighting skills you learned along your service and make a name for yourself in the arena. Since you have no home, you set up in the dragon's tankard, a pricey endevour, but its worth to have a roof over your head. Your stard with your formers master scale armor and his broadsword.[/i][/indent]\n\n[center][b]Main Quest:[/b][/center]\n[center]Become the Grand Champion of the Gauntlet to restore your family's honor[/center]"
 	}
 }
@@ -147,11 +147,13 @@ func _on_class_hover_started(hovered_class: String):
 	
 	# Stats horizontal aufbauen für besseres Layout
 	var stats_text = "[center][color=yellow]HP:[/color] [color=white]" + str(data.hp) + "[/color] | "
+	stats_text += "[color=yellow]END:[/color] [color=white]" + str(data.end) + "[/color] | "
 	stats_text += "[color=yellow]Str:[/color] [color=white]" + str(data.str) + "[/color] | "
 	stats_text += "[color=yellow]Stam:[/color] [color=white]" + str(data.stam) + "[/color] | "
 	stats_text += "[color=yellow]Dex:[/color] [color=white]" + str(data.dex) + "[/color] | "
 	stats_text += "[color=yellow]Luck:[/color] [color=white]" + str(data.luck) + "[/color] | "
-	stats_text += "[color=yellow]Gold:[/color] [color=white]" + str(data.gold) + "[/color][/center]\n\n"
+	stats_text += "[color=yellow]Gold:[/color] [color=white]" + str(data.gold) + "[/color] | "
+	stats_text += "[color=yellow]Alignment:[/color] [color=white]" + str(data.alignment) + "[/color][/center]\n\n"
 	
 	stats_text += data.story
 	
@@ -163,9 +165,7 @@ func _on_class_hover_started(hovered_class: String):
 	tween.tween_property(classStatsPanel, "modulate:a", 1.0, 0.2)
 
 func _on_class_hover_ended():
-	var tween = create_tween()
-	tween.tween_property(classStatsPanel, "modulate:a", 0.0, 0.2)
-	tween.tween_callback(func(): classStatsPanel.visible = false)
+	classStatsPanel.visible = false
 
 # --- ENDE: AB IN DIE STADT ---
 func choose_class(chosen_class: String):
